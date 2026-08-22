@@ -1,0 +1,23 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Secrets / credentials
+.env
+.streamlit/secrets.toml
+client_secret*.json
+credentials*.json
+token*.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Third-party source PDFs
+paper/references/**/*.pdf
+data/raw/outbreaks/reports/**/*.pdf
