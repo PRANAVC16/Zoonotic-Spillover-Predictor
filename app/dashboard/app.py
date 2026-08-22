@@ -1,7 +1,7 @@
 # ============================================================
 # SpilloverAI
 # Zoonotic Spillover Intelligence Platform
-# Final Editorial UI
+# Final UI
 # ============================================================
 
 from pathlib import Path
