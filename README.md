@@ -30,7 +30,6 @@ The project combines climate observations, satellite-derived vegetation indicato
 * [Limitations](#limitations)
 * [Future Work](#future-work)
 * [Responsible Interpretation](#responsible-interpretation)
-* [Project Status](#project-status)
 
 ---
 
@@ -545,37 +544,9 @@ The platform should be interpreted as a **research prototype for environmental i
 
 ---
 
-## Project Status
-
-```text
-Environmental data pipeline       ✅
-Satellite NDVI pipeline           ✅
-Forest-loss extraction            ✅
-Elevation extraction              ✅
-Climate extraction                ✅
-Master environmental dataset      ✅
-Feature engineering               ✅
-Verified KFD targets              ✅
-ML model comparison               ✅
-Spatial validation                ✅
-Temporal validation               ✅
-Feature-set ablation              ✅
-Final Dynamic RF model            ✅
-Research dashboard                ✅
-Publication figures/tables        ✅
-GitHub research snapshot          ✅
-Research manuscript               In progress
-```
-
----
-
 ## Author
 
 **Pranav Choudhary**
-B.E. Artificial Intelligence & Data Science
-P.V.G. College of Engineering, Nashik
-Savitribai Phule Pune University
-
 ---
 
 ## License
