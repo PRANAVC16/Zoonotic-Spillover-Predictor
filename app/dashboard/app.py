@@ -1,19 +1,11 @@
 # ============================================================
-# SpilloverAI / Zoonotic Spillover Predictor
-# Streamlit Dashboard
-#
-# Final research dashboard:
-#   - Multi-district environmental monitoring
-#   - Environmental Risk Index
-#   - Verified KFD ML outbreak signal
-#   - Climate / vegetation / forest analysis
-#   - Model interpretation and methodology
-#
-# IMPORTANT:
-# Environmental_Risk_Score != ML KFD outbreak probability
+# SpilloverAI
+# Zoonotic Spillover Intelligence Platform
+# Final UI
 # ============================================================
 
 from pathlib import Path
+import base64
 import json
 
 import joblib
@@ -27,31 +19,26 @@ import plotly.graph_objects as go
 
 
 # ============================================================
-# 1. PAGE CONFIGURATION
+# PAGE CONFIG
 # ============================================================
 
 st.set_page_config(
-    page_title="SpilloverAI | KFD Environmental Intelligence",
-    page_icon="🌿",
+    page_title="SpilloverAI | KFD",
+    page_icon="◐",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed"
 )
 
 
 # ============================================================
-# 2. FIND PROJECT ROOT AUTOMATICALLY
+# PROJECT ROOT
 # ============================================================
 
 def find_project_root():
 
     current = Path(__file__).resolve().parent
 
-    candidates = [
-        current,
-        *current.parents
-    ]
-
-    for folder in candidates:
+    for folder in [current, *current.parents]:
 
         if (
             (folder / "data").exists()
@@ -60,55 +47,96 @@ def find_project_root():
         ):
             return folder
 
-    # Fallback for:
-    # project/app/dashboard/app.py
-
     return Path(__file__).resolve().parents[2]
 
 
-ROOT_DIR = find_project_root()
+ROOT = find_project_root()
 
-DATA_DIR = ROOT_DIR / "data" / "processed"
+DATA_DIR = ROOT / "data" / "processed"
+MODEL_DIR = ROOT / "outputs" / "models"
 
-OUTPUT_MODEL_DIR = (
-    ROOT_DIR
-    / "outputs"
-    / "models"
-)
-
-LEGACY_MODEL_DIR = (
-    ROOT_DIR
-    / "models"
-)
+ASSETS_DIR = ROOT / "app" / "assets"
 
 
 # ============================================================
-# 3. FILE PATHS
+# PATHS
 # ============================================================
 
 DASHBOARD_DATA_PATH = (
-    DATA_DIR
-    / "dashboard_environment_data.csv"
+    DATA_DIR / "dashboard_environment_data.csv"
 )
 
 MASTER_FEATURES_PATH = (
-    DATA_DIR
-    / "master_features.csv"
+    DATA_DIR / "master_features.csv"
 )
 
 MODEL_PATH = (
-    OUTPUT_MODEL_DIR
-    / "kfd_outbreak_model_v2.pkl"
+    MODEL_DIR / "kfd_outbreak_model_v2.pkl"
 )
 
-MODEL_METADATA_PATH = (
-    OUTPUT_MODEL_DIR
-    / "kfd_outbreak_model_v2_metadata.json"
+METADATA_PATH = (
+    MODEL_DIR / "kfd_outbreak_model_v2_metadata.json"
+)
+
+LOCAL_HERO_IMAGE = (
+    ASSETS_DIR / "western_ghats_hero.jpg"
 )
 
 
 # ============================================================
-# 4. DISTRICT COORDINATES
+# IMAGE HANDLING
+# ============================================================
+
+def image_to_data_uri(path):
+
+    if not path.exists():
+        return None
+
+    suffix = path.suffix.lower()
+
+    mime = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp"
+    }.get(
+        suffix,
+        "image/jpeg"
+    )
+
+    encoded = base64.b64encode(
+        path.read_bytes()
+    ).decode()
+
+    return (
+        f"data:{mime};base64,{encoded}"
+    )
+
+
+local_hero = image_to_data_uri(
+    LOCAL_HERO_IMAGE
+)
+
+
+if local_hero:
+
+    HERO_IMAGE = local_hero
+
+else:
+
+    # Fallback only.
+    # Replace with your preferred licensed
+    # Western Ghats photograph later.
+
+    HERO_IMAGE = (
+        "https://images.unsplash.com/"
+        "photo-1500530855697-b586d89ba3ee"
+        "?auto=format&fit=crop&w=1800&q=88"
+    )
+
+
+# ============================================================
+# DISTRICT COORDINATES
 # ============================================================
 
 DISTRICT_COORDINATES = {
@@ -161,276 +189,1245 @@ DISTRICT_COORDINATES = {
 
 
 # ============================================================
-# 5. CUSTOM CSS
+# GLOBAL CSS
 # ============================================================
 
 st.html(
     """
-    <style>
+<style>
 
-    /* Main page */
-    .stApp {
-        background:
-            linear-gradient(
-                180deg,
-                #f7fbfa 0%,
-                #ffffff 42%,
-                #f5faf8 100%
-            );
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+
+    --ink: #0D141B;
+    --paper: #F2EBE4;
+    --taupe: #AEA198;
+    --grey: #969696;
+
+    --forest: #304E43;
+    --forest-soft: #71877C;
+
+    --red: #9F453B;
+
+    --line: rgba(13, 20, 27, 0.13);
+
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html,
+body,
+[class*="css"] {
+
+    font-family:
+        "Helvetica Neue",
+        "Inter",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+}
+
+
+.stApp {
+
+    background:
+        var(--taupe);
+
+    color:
+        var(--ink);
+
+}
+
+
+.block-container {
+
+    max-width:
+        1420px;
+
+    padding-top:
+        2rem;
+
+    padding-bottom:
+        5rem;
+
+    padding-left:
+        2.5rem;
+
+    padding-right:
+        2.5rem;
+
+}
+
+
+/* =========================================================
+   HIDE STREAMLIT CHROME
+========================================================= */
+
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+header[data-testid="stHeader"] {
+
+    background:
+        transparent;
+
+}
+
+
+/* =========================================================
+   STREAMLIT BUTTONS
+========================================================= */
+
+.stButton > button {
+
+    border:
+        1px solid
+        rgba(13,20,27,0.18);
+
+    background:
+        var(--paper);
+
+    color:
+        var(--ink);
+
+    border-radius:
+        999px;
+
+    padding:
+        0.55rem
+        1.15rem;
+
+    min-height:
+        42px;
+
+    font-size:
+        13px;
+
+    transition:
+        all 0.2s ease;
+
+}
+
+
+.stButton > button:hover {
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    border-color:
+        var(--ink);
+
+}
+
+
+/* =========================================================
+   SELECT BOXES
+========================================================= */
+
+div[data-baseweb="select"] > div {
+
+    background:
+        rgba(242,235,228,0.92);
+
+    border:
+        1px solid
+        rgba(13,20,27,0.12);
+
+    border-radius:
+        12px;
+
+    min-height:
+        46px;
+
+}
+
+
+/* =========================================================
+   BRAND BAR
+========================================================= */
+
+.brandbar {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding:
+        5px
+        3px
+        18px
+        3px;
+
+}
+
+
+.brand-left {
+
+    display:
+        flex;
+
+    gap:
+        11px;
+
+    align-items:
+        center;
+
+}
+
+
+.logo-mark {
+
+    width:
+        28px;
+
+    height:
+        28px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        15px;
+
+}
+
+
+.brand-name {
+
+    font-size:
+        15px;
+
+    font-weight:
+        650;
+
+    letter-spacing:
+        -0.025em;
+
+}
+
+
+.brand-meta {
+
+    color:
+        rgba(13,20,27,0.60);
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menu-panel {
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    border-radius:
+        26px;
+
+    padding:
+        42px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.menu-kicker {
+
+    color:
+        #A9B0B3;
+
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.13em;
+
+}
+
+
+.menu-title {
+
+    font-size:
+        clamp(
+            3.7rem,
+            7vw,
+            7.2rem
+        );
+
+    line-height:
+        0.88;
+
+    letter-spacing:
+        -0.065em;
+
+    font-weight:
+        500;
+
+    margin-top:
+        22px;
+
+    max-width:
+        800px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    position:
+        relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    min-height:
+        650px;
+
+    border-radius:
+        28px;
+
+    overflow:
+        hidden;
+
+    background:
+        var(--paper);
+
+}
+
+
+.hero-left {
+
+    min-height:
+        650px;
+
+    padding:
+        46px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        space-between;
+
+}
+
+
+.hero-right {
+
+    min-height:
+        650px;
+
+    background-size:
+        cover;
+
+    background-position:
+        center;
+
+    position:
+        relative;
+
+}
+
+
+.hero-right::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,0.02),
+            rgba(0,0,0,0.20)
+        );
+
+}
+
+
+.hero-logo {
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+}
+
+
+.hero-eyebrow {
+
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.15em;
+
+    color:
+        #74716D;
+
+}
+
+
+.hero-headline {
+
+    position:
+        absolute;
+
+    z-index:
+        3;
+
+    left:
+        50%;
+
+    top:
+        49%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    width:
+        min(
+            960px,
+            82%
+        );
+
+    font-size:
+        clamp(
+            3.5rem,
+            6vw,
+            6.7rem
+        );
+
+    line-height:
+        0.89;
+
+    letter-spacing:
+        -0.065em;
+
+    text-align:
+        center;
+
+    font-weight:
+        400;
+
+    color:
+        var(--ink);
+
+}
+
+
+.hero-headline .light-on-image {
+
+    color:
+        var(--paper);
+
+}
+
+
+.hero-copy {
+
+    font-size:
+        12px;
+
+    color:
+        #555652;
+
+    max-width:
+        310px;
+
+    line-height:
+        1.65;
+
+}
+
+
+.hero-footer {
+
+    font-size:
+        12px;
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =========================================================
+   FLOATING MODEL CARD
+========================================================= */
+
+.model-card {
+
+    position:
+        absolute;
+
+    z-index:
+        5;
+
+    right:
+        34px;
+
+    bottom:
+        34px;
+
+    width:
+        340px;
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(
+            242,
+            235,
+            228,
+            0.96
+        );
+
+    backdrop-filter:
+        blur(16px);
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 18px 55px
+        rgba(0,0,0,0.23);
+
+}
+
+
+.card-overline {
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+
+    color:
+        #6F706D;
+
+}
+
+
+.model-status {
+
+    font-size:
+        34px;
+
+    letter-spacing:
+        -0.05em;
+
+    margin:
+        9px
+        0
+        15px
+        0;
+
+}
+
+
+.signal-high {
+
+    color:
+        var(--red);
+
+}
+
+
+.signal-low {
+
+    color:
+        var(--forest);
+
+}
+
+
+.model-line {
+
+    height:
+        1px;
+
+    background:
+        rgba(13,20,27,0.14);
+
+    margin:
+        14px
+        0;
+
+}
+
+
+.model-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.9;
+
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.filter-shell {
+
+    margin-top:
+        18px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.filter-caption {
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.13em;
+
+    color:
+        rgba(13,20,27,0.60);
+
+}
+
+
+/* =========================================================
+   EDITORIAL SURFACE
+========================================================= */
+
+.paper {
+
+    background:
+        var(--paper);
+
+    border-radius:
+        28px;
+
+    padding:
+        50px;
+
+    margin-top:
+        22px;
+
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section-index {
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.15em;
+
+    color:
+        #72716D;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.section-title {
+
+    font-size:
+        clamp(
+            3.2rem,
+            5.2vw,
+            5.7rem
+        );
+
+    line-height:
+        0.91;
+
+    letter-spacing:
+        -0.062em;
+
+    font-weight:
+        400;
+
+    max-width:
+        920px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.section-text {
+
+    max-width:
+        570px;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.75;
+
+    color:
+        #65645F;
+
+    margin-bottom:
+        35px;
+
+}
+
+
+/* =========================================================
+   METRIC STRIP
+========================================================= */
+
+.metric-strip {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    border-top:
+        1px solid
+        var(--line);
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    margin:
+        35px
+        0;
+
+}
+
+
+.metric-item {
+
+    padding:
+        28px
+        24px;
+
+    border-right:
+        1px solid
+        var(--line);
+
+}
+
+
+.metric-item:last-child {
+
+    border-right:
+        none;
+
+}
+
+
+.metric-label {
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.13em;
+
+    text-transform:
+        uppercase;
+
+    color:
+        #77746F;
+
+}
+
+
+.metric-value {
+
+    font-size:
+        37px;
+
+    letter-spacing:
+        -0.045em;
+
+    margin-top:
+        12px;
+
+}
+
+
+.metric-unit {
+
+    font-size:
+        11px;
+
+    color:
+        #83807B;
+
+    margin-top:
+        5px;
+
+}
+
+
+/* =========================================================
+   EDITORIAL CARD
+========================================================= */
+
+.editorial-card {
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        20px;
+
+    padding:
+        27px;
+
+    min-height:
+        100%;
+
+}
+
+
+.editorial-card.dark {
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    border:
+        none;
+
+}
+
+
+.big-value {
+
+    font-size:
+        50px;
+
+    letter-spacing:
+        -0.055em;
+
+    margin:
+        10px
+        0;
+
+}
+
+
+.small-copy {
+
+    font-size:
+        12px;
+
+    line-height:
+        1.7;
+
+    color:
+        #6D6B67;
+
+}
+
+
+.dark .small-copy {
+
+    color:
+        #A9B0B3;
+
+}
+
+
+/* =========================================================
+   DARK MODEL AREA
+========================================================= */
+
+.dark-section {
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    border-radius:
+        28px;
+
+    padding:
+        50px;
+
+    margin-top:
+        22px;
+
+}
+
+
+.dark-section .section-index {
+
+    color:
+        #9EA5A8;
+
+}
+
+
+.dark-section .section-text {
+
+    color:
+        #A9B0B3;
+
+}
+
+
+/* =========================================================
+   RESEARCH METHOD
+========================================================= */
+
+.method-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        2fr;
+
+    gap:
+        20px;
+
+    padding:
+        24px
+        0;
+
+    border-top:
+        1px solid
+        var(--line);
+
+}
+
+
+.method-number {
+
+    font-size:
+        11px;
+
+    color:
+        #77736E;
+
+}
+
+
+.method-title {
+
+    font-size:
+        23px;
+
+    letter-spacing:
+        -0.035em;
+
+}
+
+
+.method-text {
+
+    font-size:
+        12px;
+
+    line-height:
+        1.65;
+
+    color:
+        #686762;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    padding:
+        24px
+        3px
+        4px
+        3px;
+
+    font-size:
+        10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.11em;
+
+    color:
+        rgba(13,20,27,0.65);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (
+    max-width: 950px
+) {
+
+    .hero {
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    /* Reduce upper blank space */
+
+    .hero-left,
+    .hero-right {
+
+        min-height:
+            520px;
+
+    }
+
+
+    .hero-headline {
+
+        width:
+            90%;
+
+    }
+
+
+    .metric-strip {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+
+    }
+
+
+    .method-row {
+
+        grid-template-columns:
+            50px
+            1fr;
+
+    }
+
+
+    .method-text {
+
+        grid-column:
+            2;
+
+    }
+
+}
+
+
+@media (
+    max-width: 600px
+) {
+
     .block-container {
-        padding-top: 2rem;
-        padding-bottom: 3rem;
-        max-width: 1500px;
+
+        padding-left:
+            1rem;
+
+        padding-right:
+            1rem;
+
     }
 
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background:
-            linear-gradient(
-                180deg,
-                #071d18,
-                #0b3027
-            );
-    }
 
-    [data-testid="stSidebar"] * {
-        color: #f5fffb;
-    }
-
-    [data-testid="stSidebar"] label {
-        color: #dcf7ed !important;
-    }
-
-    /* Hero */
-    .hero-container {
+    .hero-left {
 
         padding:
-            34px
-            38px;
+            30px;
 
-        border-radius:
-            24px;
-
-        background:
-            linear-gradient(
-                120deg,
-                #082d25,
-                #0b5543
-            );
-
-        color:
-            white;
-
-        margin-bottom:
-            24px;
-
-        box-shadow:
-            0 10px 35px
-            rgba(
-                0,
-                55,
-                43,
-                0.16
-            );
     }
 
-    .hero-title {
 
-        font-size:
-            42px;
+    .model-card {
 
-        font-weight:
-            800;
-
-        margin-bottom:
-            8px;
-
-        letter-spacing:
-            -1px;
-    }
-
-    .hero-subtitle {
-
-        font-size:
-            17px;
-
-        color:
-            #d4f4e7;
-
-        max-width:
-            850px;
-
-        line-height:
-            1.6;
-    }
-
-    /* Section headings */
-    .section-title {
-
-        font-size:
-            25px;
-
-        font-weight:
-            750;
-
-        margin-top:
-            15px;
-
-        margin-bottom:
-            6px;
-
-        color:
-            #0b322a;
-    }
-
-    .section-subtitle {
-
-        color:
-            #65746f;
-
-        font-size:
-            14px;
-
-        margin-bottom:
-            18px;
-    }
-
-    /* Info cards */
-    .custom-card {
-
-        background:
-            white;
-
-        border:
-            1px solid
-            #e3efea;
-
-        border-radius:
-            18px;
-
-        padding:
+        right:
             20px;
 
-        box-shadow:
-            0 4px 18px
-            rgba(
-                20,
-                70,
-                55,
-                0.06
-            );
-
-        height:
-            100%;
-    }
-
-    /* AI signal */
-    .signal-high {
-
-        padding:
-            22px;
-
-        background:
-            #fff3f2;
-
-        border:
-            1px solid
-            #f2c7c2;
-
-        border-radius:
-            16px;
-
-        text-align:
-            center;
-
-        font-size:
-            26px;
-
-        font-weight:
-            800;
-
-        color:
-            #a63026;
-    }
-
-    .signal-low {
-
-        padding:
-            22px;
-
-        background:
-            #effaf5;
-
-        border:
-            1px solid
-            #c8e8d9;
-
-        border-radius:
-            16px;
-
-        text-align:
-            center;
-
-        font-size:
-            26px;
-
-        font-weight:
-            800;
-
-        color:
-            #176647;
-    }
-
-    .small-note {
-
-        font-size:
-            13px;
-
-        color:
-            #697873;
-
-        line-height:
-            1.55;
-    }
-
-    .method-card {
-
-        border-left:
-            5px solid
-            #198c68;
-
-        background:
-            white;
-
-        border-radius:
-            14px;
-
-        padding:
+        bottom:
             20px;
 
-        margin-bottom:
-            15px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(
-                0,
-                0,
-                0,
-                0.04
+        width:
+            calc(
+                100%
+                -
+                40px
             );
+
     }
 
-    </style>
-    """
+
+    .metric-strip {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .metric-item {
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid
+            var(--line);
+
+    }
+
+
+    .paper,
+    .dark-section {
+
+        padding:
+            30px;
+
+    }
+
+}
+
+</style>
+"""
 )
 
 
 # ============================================================
-# 6. LOAD DATA
+# LOAD DATA
 # ============================================================
 
 @st.cache_data
@@ -451,25 +1448,20 @@ def load_environment_data():
     else:
 
         raise FileNotFoundError(
-            "Neither dashboard_environment_data.csv "
-            "nor master_features.csv could be found."
+            "No processed environmental dataset found."
         )
 
 
-    # --------------------------------------------------------
-    # Clean Year
-    # --------------------------------------------------------
-
-    df["Year"] = (
-        pd.to_numeric(
-            df["Year"],
-            errors="coerce"
-        )
+    df["Year"] = pd.to_numeric(
+        df["Year"],
+        errors="coerce"
     )
+
 
     df = df.dropna(
         subset=["Year"]
     )
+
 
     df["Year"] = (
         df["Year"]
@@ -478,7 +1470,7 @@ def load_environment_data():
 
 
     # --------------------------------------------------------
-    # Temperature range
+    # TEMPERATURE RANGE
     # --------------------------------------------------------
 
     if (
@@ -492,24 +1484,18 @@ def load_environment_data():
         in df.columns
     ):
 
-        df[
-            "Temperature_Range"
-        ] = (
+        df["Temperature_Range"] = (
 
-            df[
-                "Max_Temperature"
-            ]
+            df["Max_Temperature"]
 
             -
 
-            df[
-                "Min_Temperature"
-            ]
+            df["Min_Temperature"]
         )
 
 
     # --------------------------------------------------------
-    # Environmental Risk Score fallback
+    # ENVIRONMENTAL INDEX
     # --------------------------------------------------------
 
     if (
@@ -518,11 +1504,13 @@ def load_environment_data():
     ):
 
         required = [
+
             "Temperature",
             "Rainfall",
             "NDVI",
             "Forest_Loss"
         ]
+
 
         if all(
             col in df.columns
@@ -535,9 +1523,7 @@ def load_environment_data():
 
                 0.30
                 *
-                df[
-                    "Temperature"
-                ].rank(
+                df["Temperature"].rank(
                     pct=True
                 )
 
@@ -545,9 +1531,7 @@ def load_environment_data():
 
                 0.25
                 *
-                df[
-                    "Rainfall"
-                ].rank(
+                df["Rainfall"].rank(
                     pct=True
                 )
 
@@ -558,9 +1542,7 @@ def load_environment_data():
                 (
                     1
                     -
-                    df[
-                        "NDVI"
-                    ].rank(
+                    df["NDVI"].rank(
                         pct=True
                     )
                 )
@@ -569,28 +1551,19 @@ def load_environment_data():
 
                 0.25
                 *
-                df[
-                    "Forest_Loss"
-                ].rank(
+                df["Forest_Loss"].rank(
                     pct=True
                 )
 
             ) * 100
 
 
-    # --------------------------------------------------------
-    # Environmental Risk Level fallback
-    # --------------------------------------------------------
-
     if (
         "Environmental_Risk_Level"
         not in df.columns
-        and
-        "Environmental_Risk_Score"
-        in df.columns
     ):
 
-        def risk_category(score):
+        def risk_level(score):
 
             if pd.isna(score):
                 return "Unavailable"
@@ -611,39 +1584,44 @@ def load_environment_data():
             df[
                 "Environmental_Risk_Score"
             ].apply(
-                risk_category
+                risk_level
             )
         )
 
 
     # --------------------------------------------------------
-    # Coordinates
+    # COORDINATES
     # --------------------------------------------------------
 
-    df[
-        "Latitude"
-    ] = (
+    df["Latitude"] = (
+
         df["District"]
         .map(
-            lambda x:
+            lambda district:
                 DISTRICT_COORDINATES
                 .get(
-                    x,
-                    (np.nan, np.nan)
+                    district,
+                    (
+                        np.nan,
+                        np.nan
+                    )
                 )[0]
         )
     )
 
-    df[
-        "Longitude"
-    ] = (
+
+    df["Longitude"] = (
+
         df["District"]
         .map(
-            lambda x:
+            lambda district:
                 DISTRICT_COORDINATES
                 .get(
-                    x,
-                    (np.nan, np.nan)
+                    district,
+                    (
+                        np.nan,
+                        np.nan
+                    )
                 )[1]
         )
     )
@@ -653,51 +1631,28 @@ def load_environment_data():
 
 
 # ============================================================
-# 7. LOAD MODEL
+# LOAD MODEL
 # ============================================================
 
 @st.cache_resource
-def load_kfd_model():
+def load_model():
 
-    # Primary research model
     if MODEL_PATH.exists():
 
-        model = joblib.load(
+        return joblib.load(
             MODEL_PATH
         )
-
-        return model
-
-
-    # Optional fallback
-    fallback = (
-        LEGACY_MODEL_DIR
-        / "kfd_outbreak_model_v2.pkl"
-    )
-
-    if fallback.exists():
-
-        model = joblib.load(
-            fallback
-        )
-
-        return model
-
 
     return None
 
 
-# ============================================================
-# 8. LOAD MODEL METADATA
-# ============================================================
-
 @st.cache_data
-def load_model_metadata():
+def load_metadata():
 
-    if MODEL_METADATA_PATH.exists():
+    if METADATA_PATH.exists():
 
         with open(
-            MODEL_METADATA_PATH,
+            METADATA_PATH,
             "r"
         ) as file:
 
@@ -708,10 +1663,6 @@ def load_model_metadata():
     return {}
 
 
-# ============================================================
-# 9. LOAD EVERYTHING
-# ============================================================
-
 try:
 
     environment_df = (
@@ -721,7 +1672,7 @@ try:
 except Exception as error:
 
     st.error(
-        "Unable to load the environmental dataset."
+        "Unable to load environmental data."
     )
 
     st.exception(
@@ -731,25 +1682,22 @@ except Exception as error:
     st.stop()
 
 
-kfd_model = (
-    load_kfd_model()
-)
+kfd_model = load_model()
 
-model_metadata = (
-    load_model_metadata()
-)
+model_metadata = load_metadata()
 
 
 # ============================================================
-# 10. HELPER FUNCTIONS
+# HELPERS
 # ============================================================
 
-def safe_number(
+def fmt(
     value,
     decimals=2
 ):
 
     if pd.isna(value):
+
         return "N/A"
 
     return (
@@ -757,222 +1705,25 @@ def safe_number(
     )
 
 
-def make_environment_gauge(
-    score
-):
-
-    score = float(
-        np.clip(
-            score,
-            0,
-            100
-        )
-    )
-
-    fig = go.Figure(
-
-        go.Indicator(
-
-            mode=(
-                "gauge+number"
-            ),
-
-            value=score,
-
-            number={
-                "suffix": "/100"
-            },
-
-            title={
-                "text":
-                    "Environmental Risk Index"
-            },
-
-            gauge={
-
-                "axis": {
-                    "range": [
-                        0,
-                        100
-                    ]
-                },
-
-                "bar": {
-                    "color":
-                        "#125b4c"
-                },
-
-                "steps": [
-
-                    {
-                        "range":
-                            [0, 33],
-
-                        "color":
-                            "#dff3e8"
-                    },
-
-                    {
-                        "range":
-                            [33, 66],
-
-                        "color":
-                            "#fff0c2"
-                    },
-
-                    {
-                        "range":
-                            [66, 100],
-
-                        "color":
-                            "#f7d6d2"
-                    }
-                ]
-            }
-        )
-    )
-
-    fig.update_layout(
-
-        height=300,
-
-        margin=dict(
-            l=30,
-            r=30,
-            t=60,
-            b=20
-        )
-    )
-
-    return fig
-
-
-def make_model_gauge(
-    model_score
-):
-
-    model_score = float(
-        np.clip(
-            model_score,
-            0,
-            1
-        )
-    )
-
-    fig = go.Figure(
-
-        go.Indicator(
-
-            mode=(
-                "gauge+number"
-            ),
-
-            value=model_score,
-
-            number={
-                "valueformat":
-                    ".3f"
-            },
-
-            title={
-                "text":
-                    "Model Score"
-            },
-
-            gauge={
-
-                "axis": {
-                    "range": [
-                        0,
-                        1
-                    ]
-                },
-
-                "bar": {
-                    "color":
-                        "#1a6655"
-                },
-
-                "steps": [
-
-                    {
-                        "range":
-                            [0, 0.5],
-
-                        "color":
-                            "#dff3e8"
-                    },
-
-                    {
-                        "range":
-                            [0.5, 1],
-
-                        "color":
-                            "#f5d6d1"
-                    }
-                ],
-
-                "threshold": {
-
-                    "line": {
-                        "color":
-                            "#272727",
-
-                        "width":
-                            3
-                    },
-
-                    "thickness":
-                        0.8,
-
-                    "value":
-                        0.5
-                }
-            }
-        )
-    )
-
-    fig.update_layout(
-
-        height=300,
-
-        margin=dict(
-            l=30,
-            r=30,
-            t=60,
-            b=20
-        )
-    )
-
-    return fig
-
-
-def predict_kfd_signal(
-    row
-):
+def predict_kfd(row):
 
     if kfd_model is None:
 
         return (
             None,
-            None,
             None
         )
 
 
-    default_features = [
-
-        "Temperature",
-        "Rainfall",
-        "NDVI",
-        "Temperature_Range"
-    ]
-
-
-    model_features = (
+    features = (
         model_metadata.get(
             "features",
-            default_features
+            [
+                "Temperature",
+                "Rainfall",
+                "NDVI",
+                "Temperature_Range"
+            ]
         )
     )
 
@@ -981,8 +1732,7 @@ def predict_kfd_signal(
 
         feature
 
-        for feature
-        in model_features
+        for feature in features
 
         if feature
         not in row.index
@@ -993,35 +1743,30 @@ def predict_kfd_signal(
 
         return (
             None,
-            None,
-            (
-                "Missing model features: "
-                +
-                ", ".join(
-                    missing
-                )
-            )
+            None
         )
 
 
-    input_data = pd.DataFrame(
-
+    X_input = pd.DataFrame(
         [
             {
                 feature:
                     row[feature]
 
                 for feature
-                in model_features
+                in features
             }
         ]
     )
 
 
-    prediction = int(
-        kfd_model.predict(
-            input_data
+    pred = int(
+
+        kfd_model
+        .predict(
+            X_input
         )[0]
+
     )
 
 
@@ -1033,194 +1778,443 @@ def predict_kfd_signal(
         "predict_proba"
     ):
 
-        probability_array = (
+        score = float(
+
             kfd_model
             .predict_proba(
-                input_data
-            )
-        )
+                X_input
+            )[0, 1]
 
-        score = float(
-            probability_array[
-                0,
-                1
-            ]
         )
 
 
     return (
-        prediction,
-        score,
-        None
+        pred,
+        score
+    )
+
+
+def style_chart(
+    fig,
+    height=440,
+    dark=False
+):
+
+    font_color = (
+        "#F2EBE4"
+        if dark
+        else "#0D141B"
+    )
+
+
+    grid_color = (
+        "rgba(242,235,228,0.12)"
+        if dark
+        else "rgba(13,20,27,0.08)"
+    )
+
+
+    fig.update_layout(
+
+        height=height,
+
+        paper_bgcolor=(
+            "rgba(0,0,0,0)"
+        ),
+
+        plot_bgcolor=(
+            "rgba(0,0,0,0)"
+        ),
+
+        font=dict(
+            color=font_color,
+            size=12
+        ),
+
+        title=dict(
+            font=dict(
+                size=17
+            ),
+            x=0
+        ),
+
+        margin=dict(
+            l=15,
+            r=15,
+            t=55,
+            b=25
+        ),
+
+        legend_title_text=""
+    )
+
+
+    fig.update_xaxes(
+
+        showgrid=False,
+
+        zeroline=False
+    )
+
+
+    fig.update_yaxes(
+
+        gridcolor=grid_color,
+
+        zeroline=False
+    )
+
+
+    return fig
+
+
+def section_intro(
+    index,
+    title,
+    text,
+    dark=False
+):
+
+    wrapper = (
+        "dark-section"
+        if dark
+        else "paper"
+    )
+
+
+    st.html(
+        f"""
+<div class="{wrapper}">
+
+    <div class="section-index">
+        {index}
+    </div>
+
+    <div class="section-title">
+        {title}
+    </div>
+
+    <div class="section-text">
+        {text}
+    </div>
+
+</div>
+        """
     )
 
 
 # ============================================================
-# 11. SIDEBAR
+# APP STATE
 # ============================================================
 
-with st.sidebar:
+if "page" not in st.session_state:
+
+    st.session_state.page = (
+        "Overview"
+    )
+
+
+if "menu_open" not in st.session_state:
+
+    st.session_state.menu_open = (
+        False
+    )
+
+
+def go_to(page_name):
+
+    st.session_state.page = (
+        page_name
+    )
+
+    st.session_state.menu_open = (
+        False
+    )
+
+
+# ============================================================
+# BRAND BAR
+# ============================================================
+
+brand_col, button_col = (
+
+    st.columns(
+        [8, 1]
+    )
+
+)
+
+
+with brand_col:
 
     st.html(
         """
-        SpilloverAI
-        Environmental Intelligence
+<div class="brandbar">
+
+    <div class="brand-left">
+
+        <div class="logo-mark">
+            ◐
+        </div>
+
+        <div class="brand-name">
+            SpilloverAI
+        </div>
+
+    </div>
+
+    <div class="brand-meta">
+
+        Zoonotic Environmental
+        Intelligence
+
+    </div>
+
+</div>
         """
     )
 
-    st.caption(
-        "KFD • Western Ghats"
+
+with button_col:
+
+    if st.button(
+        "☰",
+        use_container_width=True,
+        key="menu_toggle"
+    ):
+
+        st.session_state.menu_open = (
+            not
+            st.session_state.menu_open
+        )
+
+        st.rerun()
+
+
+# ============================================================
+# MENU PANEL
+# ============================================================
+
+if st.session_state.menu_open:
+
+    st.html(
+        """
+<div class="menu-panel">
+
+    <div class="menu-kicker">
+        Navigate SpilloverAI
+    </div>
+
+    <div class="menu-title">
+        Explore the
+        research.
+    </div>
+
+</div>
+        """
     )
 
-    st.divider()
+
+    m1, m2, m3 = (
+        st.columns(3)
+    )
 
 
-    page = st.radio(
+    with m1:
 
-        "Navigation",
+        if st.button(
+            "Overview",
+            use_container_width=True
+        ):
 
-        [
-            "Dashboard",
+            go_to(
+                "Overview"
+            )
+
+            st.rerun()
+
+
+        if st.button(
             "Climate",
+            use_container_width=True
+        ):
+
+            go_to(
+                "Climate"
+            )
+
+            st.rerun()
+
+
+    with m2:
+
+        if st.button(
             "Vegetation",
+            use_container_width=True
+        ):
+
+            go_to(
+                "Vegetation"
+            )
+
+            st.rerun()
+
+
+        if st.button(
             "Forest & Terrain",
-            "KFD Prediction",
-            "Methodology"
-        ],
+            use_container_width=True
+        ):
 
-        label_visibility="collapsed"
+            go_to(
+                "Forest & Terrain"
+            )
+
+            st.rerun()
+
+
+    with m3:
+
+        if st.button(
+            "KFD Model",
+            use_container_width=True
+        ):
+
+            go_to(
+                "KFD Model"
+            )
+
+            st.rerun()
+
+
+        if st.button(
+            "Research",
+            use_container_width=True
+        ):
+
+            go_to(
+                "Research"
+            )
+
+            st.rerun()
+
+
+    st.markdown(
+        "<div style='height:25px'></div>",
+        unsafe_allow_html=True
     )
 
 
-    st.divider()
+# ============================================================
+# FILTERS
+# ============================================================
+
+districts = sorted(
+
+    environment_df[
+        "District"
+    ]
+    .dropna()
+    .unique()
+
+)
 
 
-    st.html(
-        "Study Area"
+filter_1, filter_2, filter_space = (
+
+    st.columns(
+        [
+            1.4,
+            1,
+            4
+        ]
     )
 
+)
 
-    districts = sorted(
-        environment_df[
-            "District"
-        ].dropna().unique()
-    )
 
+with filter_1:
 
     selected_district = (
+
         st.selectbox(
             "District",
             districts
         )
+
     )
 
 
-    district_df = (
-        environment_df[
-            environment_df[
-                "District"
-            ]
-            ==
-            selected_district
-        ]
-        .sort_values(
-            "Year"
-        )
-        .copy()
-    )
-
-
-    available_years = sorted(
-
-        district_df[
-            "Year"
-        ].unique(),
-
-        reverse=True
-    )
-
-
-    selected_year = (
-        st.selectbox(
-            "Year",
-            available_years
-        )
-    )
-
-
-    st.divider()
-
-
-    st.caption(
-        f"Dataset: "
-        f"{environment_df['District'].nunique()} districts"
-    )
-
-    st.caption(
-        f"Coverage: "
-        f"{int(environment_df['Year'].min())}"
-        "–"
-        f"{int(environment_df['Year'].max())}"
-    )
-
-
-    if kfd_model is not None:
-
-        st.success(
-            "KFD Model V2 loaded"
-        )
-
-    else:
-
-        st.warning(
-            "KFD Model V2 not found"
-        )
-
-
-# ============================================================
-# 12. SELECT CURRENT RECORD
-# ============================================================
-
-selected_record = (
+district_df = (
 
     environment_df[
-
-        (
-            environment_df[
-                "District"
-            ]
-            ==
-            selected_district
-        )
-
-        &
-
-        (
-            environment_df[
-                "Year"
-            ]
-            ==
-            selected_year
-        )
-
+        environment_df[
+            "District"
+        ]
+        ==
+        selected_district
     ]
+
+    .sort_values(
+        "Year"
+    )
+
+    .copy()
+
 )
 
 
-if selected_record.empty:
+available_years = sorted(
+
+    district_df[
+        "Year"
+    ]
+    .unique(),
+
+    reverse=True
+
+)
+
+
+with filter_2:
+
+    selected_year = (
+
+        st.selectbox(
+            "Environmental year",
+            available_years
+        )
+
+    )
+
+
+selected_df = (
+
+    district_df[
+        district_df[
+            "Year"
+        ]
+        ==
+        selected_year
+    ]
+
+)
+
+
+if selected_df.empty:
 
     st.error(
-        "No environmental observation exists "
-        "for this district-year combination."
+        "No record exists for the selected district-year."
     )
 
     st.stop()
 
 
-row = (
-    selected_record.iloc[0]
-)
+row = selected_df.iloc[0]
 
+
+# ============================================================
+# VALUES
+# ============================================================
 
 temperature = row.get(
     "Temperature",
@@ -1247,443 +2241,499 @@ elevation = row.get(
     np.nan
 )
 
-temp_range = row.get(
+temperature_range = row.get(
     "Temperature_Range",
     np.nan
 )
 
-environmental_score = row.get(
+environment_score = row.get(
     "Environmental_Risk_Score",
     np.nan
 )
 
-environmental_level = row.get(
+environment_level = row.get(
     "Environmental_Risk_Level",
     "Unavailable"
 )
 
 
-# ============================================================
-# 13. REAL MODEL PREDICTION
-# ============================================================
-
-prediction, model_score, prediction_error = (
-    predict_kfd_signal(
+prediction, model_score = (
+    predict_kfd(
         row
     )
 )
 
 
-if prediction is None:
+if prediction == 1:
 
-    ai_signal = "Unavailable"
+    signal = "Elevated"
 
-elif prediction == 1:
+    signal_css = (
+        "signal-high"
+    )
 
-    ai_signal = "Elevated"
+
+elif prediction == 0:
+
+    signal = "Lower"
+
+    signal_css = (
+        "signal-low"
+    )
+
 
 else:
 
-    ai_signal = "Lower"
+    signal = "Unavailable"
+
+    signal_css = ""
+
+
+score_text = (
+
+    fmt(
+        model_score,
+        3
+    )
+
+    if model_score
+    is not None
+
+    else "N/A"
+)
 
 
 # ============================================================
-# 14. COMMON HERO
+# HERO
 # ============================================================
 
-def show_hero():
+def render_hero():
 
     st.html(
         f"""
-<div class="hero-container">
-    <div class="hero-title">
-        SpilloverAI
+<div class="hero">
+
+    <div class="hero-left">
+
+        <div>
+
+            <div class="hero-logo">
+                ◐ SpilloverAI
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="hero-eyebrow">
+                KFD /
+                Western Ghats
+            </div>
+
+            <div class="hero-copy">
+
+                Satellite,
+                climate and machine-learning
+                intelligence for understanding
+                environmental conditions
+                associated with Kyasanur
+                Forest Disease.
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-footer">
+
+            {selected_district}<br>
+
+            {selected_year}
+            environmental observation
+
+        </div>
+
     </div>
 
-    <div class="hero-subtitle">
-        Multi-source environmental intelligence
-        and experimental machine-learning
-        assessment of Kyasanur Forest Disease
-        outbreak conditions across the Western Ghats.
 
-        <br><br>
+    <div
+        class="hero-right"
+        style="
+            background-image:
+            url('{HERO_IMAGE}');
+        "
+    >
 
-        <b>{selected_district}</b>
-        &nbsp; • &nbsp;
-        <b>{selected_year}</b>
+        <div class="model-card">
+
+            <div class="card-overline">
+                AI outbreak signal
+            </div>
+
+
+            <div
+                class="
+                    model-status
+                    {signal_css}
+                "
+            >
+
+                {signal}
+
+            </div>
+
+
+            <div class="model-line">
+            </div>
+
+
+            <div class="model-row">
+
+                <span>
+                    Model score
+                </span>
+
+                <strong>
+                    {score_text}
+                </strong>
+
+            </div>
+
+
+            <div class="model-row">
+
+                <span>
+                    District
+                </span>
+
+                <strong>
+                    {selected_district}
+                </strong>
+
+            </div>
+
+
+            <div class="model-row">
+
+                <span>
+                    Model
+                </span>
+
+                <strong>
+                    Dynamic RF V2
+                </strong>
+
+            </div>
+
+        </div>
+
     </div>
+
+
+    <div class="hero-headline">
+
+        Reading the
+        <span class="light-on-image">
+            environment
+        </span>
+
+        before disease
+        emerges.
+
+    </div>
+
 </div>
         """
     )
 
 
 # ============================================================
-# 15. DASHBOARD PAGE
+# PAGE
 # ============================================================
 
-if page == "Dashboard":
-
-    show_hero()
+page = st.session_state.page
 
 
-    st.info(
-        "The Environmental Risk Index is a descriptive "
-        "environmental indicator. The AI KFD Outbreak Signal "
-        "is generated separately by the verified-label "
-        "machine-learning model."
-    )
+# ============================================================
+# OVERVIEW
+# ============================================================
 
+if page == "Overview":
 
-    # --------------------------------------------------------
-    # Environmental KPIs
-    # --------------------------------------------------------
+    render_hero()
+
 
     st.html(
-        '<div class="section-title">'
-        'Environmental Snapshot'
-        '</div>'
+        f"""
+<div class="paper">
+
+    <div class="section-index">
+        01 / Environmental overview
+    </div>
+
+    <div class="section-title">
+
+        Four signals.
+        One ecological
+        picture.
+
+    </div>
+
+    <div class="section-text">
+
+        SpilloverAI integrates
+        dynamic climate and satellite
+        observations to describe
+        environmental conditions
+        across KFD-relevant
+        Western Ghats districts.
+
+    </div>
+
+
+    <div class="metric-strip">
+
+        <div class="metric-item">
+
+            <div class="metric-label">
+                Temperature
+            </div>
+
+            <div class="metric-value">
+                {fmt(temperature,1)}°
+            </div>
+
+            <div class="metric-unit">
+                Mean annual °C
+            </div>
+
+        </div>
+
+
+        <div class="metric-item">
+
+            <div class="metric-label">
+                Rainfall
+            </div>
+
+            <div class="metric-value">
+                {fmt(rainfall,0)}
+            </div>
+
+            <div class="metric-unit">
+                Annual mm
+            </div>
+
+        </div>
+
+
+        <div class="metric-item">
+
+            <div class="metric-label">
+                Vegetation
+            </div>
+
+            <div class="metric-value">
+                {fmt(ndvi,3)}
+            </div>
+
+            <div class="metric-unit">
+                NDVI
+            </div>
+
+        </div>
+
+
+        <div class="metric-item">
+
+            <div class="metric-label">
+                Environmental index
+            </div>
+
+            <div class="metric-value">
+                {fmt(environment_score,0)}
+            </div>
+
+            <div class="metric-unit">
+                {environment_level}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        """
     )
 
-
-    c1, c2, c3, c4, c5 = (
-        st.columns(5)
-    )
-
-
-    with c1:
-
-        st.metric(
-            "🌡 Temperature",
-            (
-                f"{safe_number(temperature, 1)} °C"
-            )
-        )
-
-
-    with c2:
-
-        st.metric(
-            "🌧 Rainfall",
-            (
-                f"{safe_number(rainfall, 1)} mm"
-            )
-        )
-
-
-    with c3:
-
-        st.metric(
-            "🌿 NDVI",
-            safe_number(
-                ndvi,
-                3
-            )
-        )
-
-
-    with c4:
-
-        st.metric(
-            "🌲 Forest Loss",
-            safe_number(
-                forest_loss,
-                3
-            )
-        )
-
-
-    with c5:
-
-        st.metric(
-            "⛰ Elevation",
-            (
-                f"{safe_number(elevation, 0)} m"
-            )
-        )
-
-
-    st.divider()
-
-
-    # --------------------------------------------------------
-    # Risk + ML signal
-    # --------------------------------------------------------
 
     left, right = (
+
         st.columns(
-            [1, 1]
+            [
+                1,
+                1.8
+            ]
         )
+
     )
 
 
     with left:
 
-        if not pd.isna(
-            environmental_score
-        ):
+        st.html(
+            f"""
+<div class="editorial-card">
 
-            environment_gauge = (
-                make_environment_gauge(
-                    environmental_score
-                )
-            )
+    <div class="card-overline">
+        Current KFD classifier
+    </div>
 
-            st.plotly_chart(
-                environment_gauge,
-                width="stretch",
-                config={
-                    "displayModeBar":
-                        False
-                }
-            )
+    <div
+        class="
+            big-value
+            {signal_css}
+        "
+    >
+        {signal}
+    </div>
 
+    <div class="small-copy">
 
-            st.html(
-                f"""
-                <div class="custom-card">
+        The Dynamic Random Forest V2
+        evaluates temperature,
+        rainfall, NDVI and
+        temperature range.
 
-                <b>
-                    Environmental classification:
-                </b>
+        <br><br>
 
-                {environmental_level}
+        The resulting score is
+        an experimental classifier
+        output and not a calibrated
+        epidemiological probability.
 
-                <br><br>
+    </div>
 
-                <span class="small-note">
-
-                This index summarizes environmental
-                conditions. It is not a disease
-                diagnosis or epidemiological
-                outbreak probability.
-
-                </span>
-
-                </div>
-                """
-            )
+</div>
+            """
+        )
 
 
     with right:
 
-        st.html(
-            "🧠 AI KFD Outbreak Signal"
+        trajectory = (
+
+            district_df[
+                [
+                    "Year",
+                    "Temperature",
+                    "NDVI"
+                ]
+            ]
+
+            .melt(
+
+                id_vars="Year",
+
+                var_name="Indicator",
+
+                value_name="Value"
+            )
+
         )
 
 
-        if prediction is None:
+        fig = px.line(
 
-            st.warning(
-                "The trained KFD model is currently unavailable."
-            )
-
-
-            if prediction_error:
-
-                st.caption(
-                    prediction_error
-                )
-
-
-        else:
-
-            css_class = (
-
-                "signal-high"
-
-                if prediction == 1
-
-                else "signal-low"
-            )
-
-
-            signal_icon = (
-
-                "⚠️"
-
-                if prediction == 1
-
-                else "✅"
-            )
-
-
-            st.html(
-                f"""
-                <div class="{css_class}">
-
-                    {signal_icon}
-                    {ai_signal.upper()}
-                    SIGNAL
-
-                </div>
-                """
-            )
-
-
-            if model_score is not None:
-
-                score_gauge = (
-                    make_model_gauge(
-                        model_score
-                    )
-                )
-
-                st.plotly_chart(
-                    score_gauge,
-                    width="stretch",
-                    config={
-                        "displayModeBar":
-                            False
-                    }
-                )
-
-
-            st.caption(
-                "The model score is the classifier's internal "
-                "positive-class score. It has not been "
-                "demonstrated to be a calibrated "
-                "epidemiological outbreak probability."
-            )
-
-
-    st.divider()
-
-
-    # --------------------------------------------------------
-    # Selected district trends
-    # --------------------------------------------------------
-
-    st.html(
-        '<div class="section-title">'
-        'Recent Environmental Trends'
-        '</div>'
-    )
-
-
-    trend_left, trend_right = (
-        st.columns(2)
-    )
-
-
-    with trend_left:
-
-        temp_fig = px.line(
-
-            district_df,
+            trajectory,
 
             x="Year",
 
-            y="Temperature",
+            y="Value",
+
+            color="Indicator",
 
             markers=True,
 
             title=(
-                f"Temperature Trend — "
+                f"Environmental trajectory — "
                 f"{selected_district}"
             )
         )
 
 
-        temp_fig.update_layout(
-
-            xaxis_title="Year",
-
-            yaxis_title=(
-                "Temperature (°C)"
-            ),
-
-            margin=dict(
-                l=20,
-                r=20,
-                t=55,
-                b=20
-            )
+        fig = style_chart(
+            fig,
+            405
         )
 
 
         st.plotly_chart(
-            temp_fig,
-            width="stretch"
+            fig,
+            use_container_width=True,
+            config={
+                "displayModeBar":
+                    False
+            }
         )
 
 
-    with trend_right:
-
-        ndvi_fig = px.line(
-
-            district_df,
-
-            x="Year",
-
-            y="NDVI",
-
-            markers=True,
-
-            title=(
-                f"NDVI Trend — "
-                f"{selected_district}"
-            )
-        )
-
-
-        ndvi_fig.update_layout(
-
-            xaxis_title="Year",
-
-            yaxis_title="NDVI",
-
-            margin=dict(
-                l=20,
-                r=20,
-                t=55,
-                b=20
-            )
-        )
-
-
-        st.plotly_chart(
-            ndvi_fig,
-            width="stretch"
-        )
-
-
-    # --------------------------------------------------------
-    # Study area
-    # --------------------------------------------------------
+    # ========================================================
+    # MAP
+    # ========================================================
 
     st.html(
-        '<div class="section-title">'
-        'Western Ghats Study Districts'
-        '</div>'
+        """
+<div class="paper">
+
+    <div class="section-index">
+        02 / Geography
+    </div>
+
+    <div class="section-title">
+
+        Nine districts.
+        One connected
+        landscape.
+
+    </div>
+
+    <div class="section-text">
+
+        The study spans KFD-relevant
+        Western Ghats districts across
+        Karnataka, Kerala, Goa and
+        Maharashtra.
+
+    </div>
+
+</div>
+        """
     )
 
 
     map_df = (
 
         environment_df[
-            environment_df[
-                "Year"
-            ]
+            environment_df["Year"]
             ==
             selected_year
         ]
 
         [
             [
-                "State",
                 "District",
+                "State",
                 "Latitude",
                 "Longitude",
-                "NDVI",
-                "Temperature"
+                "Temperature",
+                "NDVI"
             ]
         ]
 
         .drop_duplicates(
-            subset=[
-                "State",
-                "District"
-            ]
+            "District"
         )
 
         .dropna(
@@ -1692,206 +2742,376 @@ if page == "Dashboard":
                 "Longitude"
             ]
         )
+
     )
 
 
-    if not map_df.empty:
+    map_fig = px.scatter_geo(
 
-        map_fig = px.scatter_geo(
+        map_df,
 
-            map_df,
+        lat="Latitude",
 
-            lat="Latitude",
+        lon="Longitude",
 
-            lon="Longitude",
+        hover_name="District",
 
-            hover_name="District",
+        hover_data={
+            "State": True,
+            "Temperature": ":.1f",
+            "NDVI": ":.3f",
+            "Latitude": False,
+            "Longitude": False
+        }
 
-            hover_data={
-                "State":
-                    True,
+    )
 
-                "Temperature":
-                    ":.1f",
 
-                "NDVI":
-                    ":.3f",
+    map_fig.update_traces(
 
-                "Latitude":
-                    False,
-
-                "Longitude":
-                    False
-            },
-
-            size_max=15
+        marker=dict(
+            size=14,
+            color="#304E43"
         )
 
+    )
 
-        map_fig.update_traces(
-            marker=dict(
-                size=12
-            )
+
+    map_fig.update_geos(
+
+        projection_type="mercator",
+
+        showland=True,
+
+        landcolor="#E6DED6",
+
+        showocean=True,
+
+        oceancolor="#D1D9D5",
+
+        showcountries=True,
+
+        countrycolor="#7D817E",
+
+        center=dict(
+            lat=14,
+            lon=75
+        ),
+
+        lataxis_range=[
+            10.5,
+            17.5
+        ],
+
+        lonaxis_range=[
+            72.5,
+            77.5
+        ]
+
+    )
+
+
+    map_fig.update_layout(
+
+        height=540,
+
+        paper_bgcolor=(
+            "rgba(0,0,0,0)"
+        ),
+
+        margin=dict(
+            l=0,
+            r=0,
+            t=0,
+            b=0
         )
 
-
-        map_fig.update_geos(
-
-            projection_type="mercator",
-
-            showland=True,
-
-            landcolor="#edf4ef",
-
-            showcountries=True,
-
-            countrycolor="#b8c8c0",
-
-            showcoastlines=True,
-
-            coastlinecolor="#78958a",
-
-            center=dict(
-                lat=14.0,
-                lon=75.2
-            ),
-
-            lataxis_range=[
-                10.5,
-                17.5
-            ],
-
-            lonaxis_range=[
-                72.5,
-                77.5
-            ]
-        )
+    )
 
 
-        map_fig.update_layout(
-
-            height=500,
-
-            margin=dict(
-                l=0,
-                r=0,
-                t=10,
-                b=0
-            )
-        )
-
-
-        st.plotly_chart(
-            map_fig,
-            width="stretch"
-        )
+    st.plotly_chart(
+        map_fig,
+        use_container_width=True,
+        config={
+            "displayModeBar":
+                False
+        }
+    )
 
 
 # ============================================================
-# 16. CLIMATE PAGE
+# CLIMATE
 # ============================================================
 
 elif page == "Climate":
 
-    show_hero()
+    render_hero()
 
 
     st.html(
-        '<div class="section-title">'
-        'Climate Analysis'
-        '</div>'
+        """
+<div class="paper">
+
+    <div class="section-index">
+        02 / Climate
+    </div>
+
+    <div class="section-title">
+
+        Temperature
+        tells only
+        part of the story.
+
+    </div>
+
+    <div class="section-text">
+
+        Annual climate observations help
+        describe the changing environmental
+        conditions experienced by each
+        Western Ghats study region.
+
+    </div>
+
+</div>
+        """
     )
 
 
-    st.html(
-        '<div class="section-subtitle">'
-        'Yearly climate observations for the selected '
-        'Western Ghats district.'
-        '</div>'
-    )
+    temperature_columns = [
 
+        column
 
-# --------------------------------------------------------
-# Temperature series
-# --------------------------------------------------------
+        for column in [
 
-temperature_columns = [
-    column
-    for column in [
-        "Temperature",
-        "Min_Temperature",
-        "Max_Temperature"
+            "Temperature",
+            "Min_Temperature",
+            "Max_Temperature"
+
+        ]
+
+        if column
+        in district_df.columns
+
     ]
-    if column in district_df.columns
-]
 
 
-if temperature_columns:
+    temp_long = (
 
-    temperature_long = (
         district_df[
             [
                 "Year",
                 *temperature_columns
             ]
         ]
+
         .melt(
+
             id_vars="Year",
+
             var_name="Temperature_Type",
+
             value_name="Temperature_Value"
+
         )
+
     )
 
 
-    fig_temperature = px.line(
-        temperature_long,
+    climate_left, climate_right = (
+
+        st.columns(
+            [
+                1.8,
+                1
+            ]
+        )
+
+    )
+
+
+    with climate_left:
+
+        fig = px.line(
+
+            temp_long,
+
+            x="Year",
+
+            y="Temperature_Value",
+
+            color="Temperature_Type",
+
+            markers=True,
+
+            title="Temperature profile"
+
+        )
+
+
+        fig = style_chart(
+            fig,
+            450
+        )
+
+
+        fig.update_yaxes(
+            title="Temperature °C"
+        )
+
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True,
+
+            config={
+                "displayModeBar":
+                    False
+            }
+
+        )
+
+
+    with climate_right:
+
+        st.html(
+            f"""
+<div class="editorial-card">
+
+    <div class="card-overline">
+        Current climate
+    </div>
+
+    <div class="big-value">
+        {fmt(temperature,1)}°
+    </div>
+
+    <div class="small-copy">
+
+        Annual rainfall
+
+        <br>
+
+        <strong style="
+            color:#0D141B;
+            font-size:24px;
+        ">
+            {fmt(rainfall,0)} mm
+        </strong>
+
+        <br><br>
+
+        Temperature range
+
+        <br>
+
+        <strong style="
+            color:#0D141B;
+            font-size:24px;
+        ">
+            {fmt(temperature_range,1)} °C
+        </strong>
+
+    </div>
+
+</div>
+            """
+        )
+
+
+    rain_fig = px.bar(
+
+        district_df,
+
         x="Year",
-        y="Temperature_Value",
-        color="Temperature_Type",
-        markers=True,
-        title=f"Temperature Profile — {selected_district}"
+
+        y="Rainfall",
+
+        title="Annual rainfall"
+
     )
 
 
-    fig_temperature.update_layout(
-        yaxis_title="Temperature (°C)",
-        xaxis_title="Year",
-        legend_title="Temperature Type"
+    rain_fig = style_chart(
+        rain_fig,
+        430
+    )
+
+
+    rain_fig.update_yaxes(
+        title="Rainfall mm"
     )
 
 
     st.plotly_chart(
-        fig_temperature,
-        width="stretch"
+
+        rain_fig,
+
+        use_container_width=True,
+
+        config={
+            "displayModeBar":
+                False
+        }
+
     )
 
 
 # ============================================================
-# 17. VEGETATION PAGE
+# VEGETATION
 # ============================================================
 
 elif page == "Vegetation":
 
-    show_hero()
+    render_hero()
 
 
     st.html(
-        '<div class="section-title">'
-        'Vegetation & NDVI'
-        '</div>'
+        """
+<div class="paper">
+
+    <div class="section-index">
+        03 / Satellite vegetation
+    </div>
+
+    <div class="section-title">
+
+        Reading forests
+        from space.
+
+    </div>
+
+    <div class="section-text">
+
+        Sentinel-derived NDVI provides a
+        consistent remote-sensing measure
+        of vegetation condition across
+        time and geography.
+
+    </div>
+
+</div>
+        """
     )
 
 
-    ndvi_left, ndvi_right = (
+    veg_left, veg_right = (
+
         st.columns(
-            [1.2, 1]
+            [
+                1.8,
+                1
+            ]
         )
+
     )
 
 
-    with ndvi_left:
+    with veg_left:
 
-        fig_ndvi = px.line(
+        fig = px.line(
 
             district_df,
 
@@ -1902,92 +3122,94 @@ elif page == "Vegetation":
             markers=True,
 
             title=(
-                f"NDVI Through Time — "
+                f"NDVI trajectory — "
                 f"{selected_district}"
             )
+
         )
 
 
-        fig_ndvi.update_layout(
-
-            yaxis_title="Mean NDVI",
-
-            xaxis_title="Year"
+        fig = style_chart(
+            fig,
+            430
         )
 
 
         st.plotly_chart(
-            fig_ndvi,
-            width="stretch"
+
+            fig,
+
+            use_container_width=True,
+
+            config={
+                "displayModeBar":
+                    False
+            }
+
         )
 
 
-    with ndvi_right:
+    with veg_right:
 
-        st.metric(
-            "Selected NDVI",
-            safe_number(
-                ndvi,
-                3
-            )
-        )
+        first_ndvi = (
 
-
-        if len(
             district_df
-        ) > 1:
+            .sort_values("Year")
+            .iloc[0]["NDVI"]
 
-            first_ndvi = (
-
-                district_df
-                .sort_values(
-                    "Year"
-                )
-                .iloc[0][
-                    "NDVI"
-                ]
-            )
+        )
 
 
-            ndvi_change = (
-                ndvi
-                -
-                first_ndvi
-            )
+        ndvi_change = (
 
+            ndvi
+            -
+            first_ndvi
 
-            st.metric(
-
-                "Change from first available year",
-
-                safe_number(
-                    ndvi_change,
-                    3
-                )
-            )
+        )
 
 
         st.html(
-            """
-            NDVI is used as a satellite-derived
-            vegetation indicator. Higher values
-            generally represent denser or healthier
-            vegetation, while lower values indicate
-            reduced vegetation cover.
+            f"""
+<div class="editorial-card">
+
+    <div class="card-overline">
+        Selected year
+    </div>
+
+    <div class="big-value">
+        {fmt(ndvi,3)}
+    </div>
+
+    <div class="small-copy">
+
+        Mean NDVI
+
+        <br><br>
+
+        Change from first
+        available observation
+
+        <br>
+
+        <strong style="
+            color:#0D141B;
+            font-size:24px;
+        ">
+            {fmt(ndvi_change,3)}
+        </strong>
+
+    </div>
+
+</div>
             """
         )
 
-
-    # --------------------------------------------------------
-    # District comparison
-    # --------------------------------------------------------
 
     comparison = (
 
         environment_df[
-            environment_df[
-                "Year"
-            ]
+            environment_df["Year"]
             ==
             selected_year
         ]
@@ -2003,65 +3225,87 @@ elif page == "Vegetation":
             "NDVI",
             ascending=False
         )
+
     )
 
 
-    if not comparison.empty:
+    fig = px.bar(
 
-        compare_fig = px.bar(
+        comparison,
 
-            comparison,
+        x="District",
 
-            x="District",
+        y="NDVI",
 
-            y="NDVI",
-
-            title=(
-                f"District NDVI Comparison — "
-                f"{selected_year}"
-            )
+        title=(
+            f"Vegetation across districts — "
+            f"{selected_year}"
         )
 
-
-        compare_fig.update_layout(
-
-            xaxis_title="District",
-
-            yaxis_title="Mean NDVI"
-        )
+    )
 
 
-        st.plotly_chart(
-            compare_fig,
-            width="stretch"
-        )
+    fig = style_chart(
+        fig,
+        430
+    )
+
+
+    st.plotly_chart(
+
+        fig,
+
+        use_container_width=True,
+
+        config={
+            "displayModeBar":
+                False
+        }
+
+    )
 
 
 # ============================================================
-# 18. FOREST & TERRAIN PAGE
+# FOREST & TERRAIN
 # ============================================================
 
 elif page == "Forest & Terrain":
 
-    show_hero()
+    render_hero()
 
 
     st.html(
-        '<div class="section-title">'
-        'Forest Disturbance & Terrain'
-        '</div>'
+        """
+<div class="paper">
+
+    <div class="section-index">
+        04 / Landscape
+    </div>
+
+    <div class="section-title">
+
+        Ecology has
+        a geography.
+
+    </div>
+
+    <div class="section-text">
+
+        Forest disturbance and terrain
+        help characterize each district,
+        although the ablation experiment
+        showed that static features did
+        not transfer strongly to completely
+        unseen districts.
+
+    </div>
+
+</div>
+        """
     )
 
 
-    st.warning(
-        "Forest_Loss is currently treated as a "
-        "district-level environmental indicator in "
-        "the research dataset. It should not be "
-        "interpreted as a yearly causal driver."
-    )
-
-
-    forest_summary = (
+    landscape = (
 
         environment_df
 
@@ -2081,20 +3325,20 @@ elif page == "Forest & Terrain":
                 "Elevation",
                 "mean"
             )
+
         )
+
     )
 
 
-    left, right = (
-        st.columns(2)
-    )
+    c1, c2 = st.columns(2)
 
 
-    with left:
+    with c1:
 
-        forest_fig = px.bar(
+        fig = px.bar(
 
-            forest_summary
+            landscape
             .sort_values(
                 "Forest_Loss",
                 ascending=False
@@ -2104,34 +3348,36 @@ elif page == "Forest & Terrain":
 
             y="Forest_Loss",
 
-            title=(
-                "Forest Loss Indicator "
-                "by District"
-            )
+            title="Forest loss indicator"
+
         )
 
 
-        forest_fig.update_layout(
-
-            xaxis_title="District",
-
-            yaxis_title=(
-                "Forest Loss Indicator"
-            )
+        fig = style_chart(
+            fig,
+            430
         )
 
 
         st.plotly_chart(
-            forest_fig,
-            width="stretch"
+
+            fig,
+
+            use_container_width=True,
+
+            config={
+                "displayModeBar":
+                    False
+            }
+
         )
 
 
-    with right:
+    with c2:
 
-        elevation_fig = px.bar(
+        fig = px.bar(
 
-            forest_summary
+            landscape
             .sort_values(
                 "Elevation",
                 ascending=False
@@ -2141,210 +3387,146 @@ elif page == "Forest & Terrain":
 
             y="Elevation",
 
-            title=(
-                "Mean Elevation "
-                "by District"
-            )
+            title="Mean elevation"
+
         )
 
 
-        elevation_fig.update_layout(
-
-            xaxis_title="District",
-
-            yaxis_title=(
-                "Elevation (m)"
-            )
+        fig = style_chart(
+            fig,
+            430
         )
 
 
         st.plotly_chart(
-            elevation_fig,
-            width="stretch"
-        )
 
+            fig,
 
-    st.html(
-        "### Selected District"
-    )
+            use_container_width=True,
 
+            config={
+                "displayModeBar":
+                    False
+            }
 
-    c1, c2 = (
-        st.columns(2)
-    )
-
-
-    with c1:
-
-        st.metric(
-            "Forest Loss Indicator",
-            safe_number(
-                forest_loss,
-                3
-            )
-        )
-
-
-    with c2:
-
-        st.metric(
-            "Mean Elevation",
-            (
-                f"{safe_number(elevation, 0)} m"
-            )
         )
 
 
 # ============================================================
-# 19. KFD PREDICTION PAGE
+# KFD MODEL
 # ============================================================
 
-elif page == "KFD Prediction":
+elif page == "KFD Model":
 
-    show_hero()
-
-
-    st.html(
-        '<div class="section-title">'
-        'Experimental KFD Outbreak Classifier'
-        '</div>'
-    )
+    render_hero()
 
 
     st.html(
-        '<div class="section-subtitle">'
-        'Dynamic environmental features are passed '
-        'to the spatially evaluated Random Forest V2 model.'
-        '</div>'
+        f"""
+<div class="dark-section">
+
+    <div class="section-index">
+        05 / Machine intelligence
+    </div>
+
+    <div class="section-title">
+
+        Can environmental
+        signals travel
+        across geography?
+
+    </div>
+
+    <div class="section-text">
+
+        The primary research model is a
+        Dynamic Random Forest trained
+        using temperature, rainfall,
+        NDVI and temperature range.
+
+        Its spatial validation performance
+        remains modest, while temporal
+        performance in represented regions
+        is more promising.
+
+    </div>
+
+
+    <div style="
+        display:grid;
+        grid-template-columns:
+            1.2fr 1fr;
+        gap:30px;
+        margin-top:35px;
+    ">
+
+        <div>
+
+            <div class="card-overline"
+                 style="color:#9EA5A8;">
+                Current AI signal
+            </div>
+
+            <div
+                style="
+                    font-size:72px;
+                    letter-spacing:-0.06em;
+                    margin-top:8px;
+                "
+                class="{signal_css}"
+            >
+
+                {signal}
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="model-row">
+                <span>Model score</span>
+                <strong>{score_text}</strong>
+            </div>
+
+            <div class="model-row">
+                <span>District</span>
+                <strong>{selected_district}</strong>
+            </div>
+
+            <div class="model-row">
+                <span>Year</span>
+                <strong>{selected_year}</strong>
+            </div>
+
+            <div class="model-row">
+                <span>Model</span>
+                <strong>Dynamic Random Forest V2</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        """
     )
 
 
     if kfd_model is None:
 
         st.error(
-            "kfd_outbreak_model_v2.pkl "
-            "could not be found."
-        )
-
-        st.code(
-            str(
-                MODEL_PATH
-            )
-        )
-
-
-    elif prediction_error:
-
-        st.error(
-            prediction_error
+            "The trained KFD model could not be loaded."
         )
 
 
     else:
 
-        prediction_left, prediction_right = (
-            st.columns(
-                [1, 1.2]
-            )
-        )
+        features = (
 
-
-        with prediction_left:
-
-            css_class = (
-
-                "signal-high"
-
-                if prediction == 1
-
-                else "signal-low"
-            )
-
-
-            signal_icon = (
-
-                "⚠️"
-
-                if prediction == 1
-
-                else "✅"
-            )
-
-
-            st.html(
-                f"""
-                <div class="{css_class}">
-
-                    {signal_icon}
-
-                    {ai_signal.upper()}
-                    OUTBREAK SIGNAL
-
-                </div>
-                """
-            )
-
-
-            st.html(
-                "<br>"
-            )
-
-
-            st.metric(
-                "District",
-                selected_district
-            )
-
-
-            st.metric(
-                "Environmental Year",
-                selected_year
-            )
-
-
-        with prediction_right:
-
-            if model_score is not None:
-
-                model_gauge = (
-                    make_model_gauge(
-                        model_score
-                    )
-                )
-
-
-                st.plotly_chart(
-                    model_gauge,
-                    width="stretch",
-                    config={
-                        "displayModeBar":
-                            False
-                    }
-                )
-
-
-        st.warning(
-            "The model score must not be interpreted "
-            "as a calibrated probability that a KFD "
-            "outbreak will occur. This is an experimental "
-            "environmental classification model."
-        )
-
-
-        # ----------------------------------------------------
-        # Model inputs
-        # ----------------------------------------------------
-
-        st.html(
-            "Model Inputs"
-        )
-
-
-        model_features = (
             model_metadata.get(
-
                 "features",
-
                 [
                     "Temperature",
                     "Rainfall",
@@ -2352,17 +3534,17 @@ elif page == "KFD Prediction":
                     "Temperature_Range"
                 ]
             )
+
         )
 
 
-        input_table = pd.DataFrame(
-
+        input_df = pd.DataFrame(
             {
 
                 "Feature":
-                    model_features,
+                    features,
 
-                "Value":
+                "Observed Value":
                     [
                         row.get(
                             feature,
@@ -2370,66 +3552,81 @@ elif page == "KFD Prediction":
                         )
 
                         for feature
-                        in model_features
+                        in features
                     ]
+
             }
         )
 
 
-        st.dataframe(
+        model_left, model_right = (
 
-            input_table,
-
-            width="stretch",
-
-            hide_index=True
-        )
-
-
-        # ----------------------------------------------------
-        # Feature importance
-        # ----------------------------------------------------
-
-        st.html(
-            "Model Feature Importance"
-        )
-
-
-        try:
-
-            rf_estimator = (
-                kfd_model
-                .named_steps[
-                    "model"
+            st.columns(
+                [
+                    1,
+                    1.8
                 ]
+            )
+
+        )
+
+
+        with model_left:
+
+            st.markdown(
+                "#### Environmental inputs"
+            )
+
+
+            st.dataframe(
+
+                input_df,
+
+                use_container_width=True,
+
+                hide_index=True
+
+            )
+
+
+        with model_right:
+
+            estimator = (
+
+                kfd_model
+                .named_steps["model"]
+
             )
 
 
             if hasattr(
-                rf_estimator,
+                estimator,
                 "feature_importances_"
             ):
 
                 importance_df = (
+
                     pd.DataFrame(
                         {
+
                             "Feature":
-                                model_features,
+                                features,
 
                             "Importance":
-                                rf_estimator
+                                estimator
                                 .feature_importances_
+
                         }
                     )
 
                     .sort_values(
-                        "Importance",
-                        ascending=True
+                        "Importance"
                     )
+
                 )
 
 
-                importance_fig = px.bar(
+                fig = px.bar(
 
                     importance_df,
 
@@ -2439,347 +3636,77 @@ elif page == "KFD Prediction":
 
                     orientation="h",
 
-                    title=(
-                        "Dynamic Random Forest "
-                        "Feature Importance"
-                    )
+                    title="Model feature importance"
+
+                )
+
+
+                fig = style_chart(
+                    fig,
+                    380
                 )
 
 
                 st.plotly_chart(
-                    importance_fig,
-                    width="stretch"
+
+                    fig,
+
+                    use_container_width=True,
+
+                    config={
+                        "displayModeBar":
+                            False
+                    }
+
                 )
 
 
-                st.caption(
-                    "Feature importance describes the "
-                    "model's use of variables. It does "
-                    "not demonstrate causality."
-                )
-
-
-        except Exception:
-
-            st.info(
-                "Feature importance is unavailable "
-                "for the loaded model."
-            )
-
-
-        # ----------------------------------------------------
-        # Model metadata
-        # ----------------------------------------------------
-
-        st.html(
-            "Research Validation"
-        )
-
-
-        m1, m2, m3, m4 = (
-            st.columns(4)
-        )
-
-
-        with m1:
-
-            st.metric(
-
-                "Training observations",
-
-                model_metadata.get(
-                    "training_observations",
-                    "46"
-                )
-            )
-
-
-        with m2:
-
-            st.metric(
-
-                "Study districts",
-
-                model_metadata.get(
-                    "districts",
-                    "9"
-                )
-            )
-
-
-        with m3:
-
-            spatial_ba = (
-                model_metadata.get(
-                    "spatial_balanced_accuracy",
-                    0.565
-                )
-            )
-
-
-            st.metric(
-
-                "Spatial Balanced Accuracy",
-
-                (
-                    f"{float(spatial_ba):.3f}"
-                )
-            )
-
-
-        with m4:
-
-            spatial_auc = (
-                model_metadata.get(
-                    "spatial_roc_auc",
-                    0.544
-                )
-            )
-
-
-            st.metric(
-
-                "Spatial ROC-AUC",
-
-                (
-                    f"{float(spatial_auc):.3f}"
-                )
-            )
-
-
-        st.info(
-            "Primary evaluation used "
-            "Leave-One-District-Out spatial validation. "
-            "The model showed modest cross-district "
-            "generalization, while temporal validation "
-            "within previously represented regions was stronger."
-        )
-
-
-        # ----------------------------------------------------
-        # Download selected assessment
-        # ----------------------------------------------------
-
-        assessment = pd.DataFrame(
-            [
-                {
-                    "State":
-                        row.get(
-                            "State",
-                            ""
-                        ),
-
-                    "District":
-                        selected_district,
-
-                    "Year":
-                        selected_year,
-
-                    "Temperature":
-                        temperature,
-
-                    "Rainfall":
-                        rainfall,
-
-                    "NDVI":
-                        ndvi,
-
-                    "Temperature_Range":
-                        temp_range,
-
-                    "Environmental_Risk_Score":
-                        environmental_score,
-
-                    "Environmental_Risk_Level":
-                        environmental_level,
-
-                    "AI_KFD_Signal":
-                        ai_signal,
-
-                    "Model_Score":
-                        model_score
-                }
-            ]
-        )
-
-
-        st.download_button(
-
-            label=(
-                "Download Selected Assessment"
-            ),
-
-            data=(
-                assessment
-                .to_csv(
-                    index=False
-                )
-                .encode(
-                    "utf-8"
-                )
-            ),
-
-            file_name=(
-                f"kfd_assessment_"
-                f"{selected_district.replace(' ', '_')}_"
-                f"{selected_year}.csv"
-            ),
-
-            mime="text/csv"
-        )
-
-
-# ============================================================
-# 20. METHODOLOGY PAGE
-# ============================================================
-
-elif page == "Methodology":
-
-    show_hero()
-
-
-    st.html(
-        '<div class="section-title">'
-        'Research Methodology'
-        '</div>'
-    )
-
+    # ========================================================
+    # VALIDATION
+    # ========================================================
 
     st.html(
         """
-        <div class="method-card">
+<div class="paper">
 
-        <b>1. Study Region</b><br>
+    <div class="section-index">
+        06 / Validation
+    </div>
 
-        Nine KFD-relevant districts across Karnataka,
-        Kerala, Goa and Maharashtra were included in
-        the Western Ghats study area.
+    <div class="section-title">
 
-        </div>
+        Promising through
+        time. Limited
+        across space.
 
+    </div>
 
-        <div class="method-card">
+    <div class="section-text">
 
-        <b>2. Climate Variables</b><br>
+        Leave-One-District-Out validation
+        tested geographic transfer, while
+        later-year validation assessed
+        temporal performance in regions
+        already represented during training.
 
-        Annual temperature and rainfall variables were
-        assembled from station/interpolated climate
-        observations.
+    </div>
 
-        </div>
-
-
-        <div class="method-card">
-
-        <b>3. Satellite Vegetation</b><br>
-
-        Sentinel-2 imagery was processed in Google
-        Earth Engine to derive NDVI-based vegetation
-        indicators.
-
-        </div>
-
-
-        <div class="method-card">
-
-        <b>4. Forest & Terrain</b><br>
-
-        Hansen Global Forest Change data and SRTM
-        elevation information were incorporated into
-        the environmental dataset.
-
-        </div>
-
-
-        <div class="method-card">
-
-        <b>5. Verified Disease Targets</b><br>
-
-        Historical KFD occurrence labels were compiled
-        from source-backed surveillance and government
-        records and merged with district-year
-        environmental observations.
-
-        </div>
-
-
-        <div class="method-card">
-
-        <b>6. Machine Learning</b><br>
-
-        Logistic Regression, Decision Tree,
-        Random Forest and XGBoost classifiers were
-        compared. Spatial generalization was evaluated
-        using Leave-One-District-Out validation.
-
-        </div>
-
-
-        <div class="method-card">
-
-        <b>7. Feature-Set Ablation</b><br>
-
-        Dynamic environmental features generalized
-        better across unseen districts than the
-        static-only feature set. The primary deployment
-        model therefore uses Temperature, Rainfall,
-        NDVI and Temperature Range.
-
-        </div>
+</div>
         """
     )
 
 
-    st.html(
-        "Final Research Pipeline"
-    )
-
-
-    st.code(
-        """
-Climate Data
-      +
-Sentinel-2 NDVI
-      +
-Forest Change
-      +
-Elevation
-      ↓
-Master Environmental Dataset
-      ↓
-Feature Engineering
-      +
-Verified KFD Outbreak Labels
-      ↓
-Model Comparison
-      ↓
-Leave-One-District-Out Validation
-      ↓
-Feature-Set Ablation
-      ↓
-Dynamic Random Forest V2
-      ↓
-Experimental KFD Outbreak Signal
-        """,
-        language=None
-    )
-
-
-    st.html(
-        "Interpretation of Current Results"
-    )
-
-
-    results_table = pd.DataFrame(
+    validation_df = pd.DataFrame(
         {
 
             "Experiment": [
 
-                "Dynamic Random Forest — Spatial",
+                "Dynamic RF · Spatial",
 
-                "Combined Decision Tree — Spatial",
+                "Combined Decision Tree · Spatial",
 
-                "Decision Tree — Temporal"
+                "Decision Tree · Temporal"
+
             ],
 
             "Balanced Accuracy": [
@@ -2787,6 +3714,7 @@ Experimental KFD Outbreak Signal
                 0.565,
                 0.543,
                 0.833
+
             ],
 
             "F1": [
@@ -2794,6 +3722,7 @@ Experimental KFD Outbreak Signal
                 0.545,
                 0.618,
                 0.909
+
             ],
 
             "ROC-AUC": [
@@ -2801,76 +3730,249 @@ Experimental KFD Outbreak Signal
                 0.544,
                 0.354,
                 0.800
+
             ]
+
         }
     )
 
 
     st.dataframe(
 
-        results_table,
+        validation_df,
 
-        width="stretch",
+        use_container_width=True,
 
         hide_index=True
+
     )
+
+
+    st.warning(
+        "Research prototype only. "
+        "The model score is not a calibrated "
+        "epidemiological probability and must "
+        "not be interpreted as an operational "
+        "public-health forecast."
+    )
+
+
+# ============================================================
+# RESEARCH
+# ============================================================
+
+elif page == "Research":
+
+    render_hero()
 
 
     st.html(
         """
-        The current results suggest stronger temporal
-        predictive signal within represented regions
-        than geographic transfer to completely unseen
-        districts. Consequently, the dashboard should
-        be interpreted as a research prototype rather
-        than an operational disease-surveillance system.
+<div class="paper">
+
+    <div class="section-index">
+        07 / Research framework
+    </div>
+
+    <div class="section-title">
+
+        From satellite
+        pixels to outbreak
+        intelligence.
+
+    </div>
+
+    <div class="section-text">
+
+        SpilloverAI combines remote sensing,
+        climate observations, landscape
+        variables and verified KFD occurrence
+        records within a reproducible
+        environmental machine-learning
+        pipeline.
+
+    </div>
+
+</div>
         """
     )
 
 
+    methods = [
+
+        (
+            "01",
+            "Climate",
+            (
+                "Annual temperature and rainfall "
+                "observations were assembled for "
+                "Western Ghats study districts."
+            )
+        ),
+
+        (
+            "02",
+            "Satellite vegetation",
+            (
+                "Sentinel-2 imagery was processed "
+                "through Google Earth Engine to "
+                "derive annual NDVI indicators."
+            )
+        ),
+
+        (
+            "03",
+            "Forest & terrain",
+            (
+                "Hansen Global Forest Change "
+                "and SRTM elevation provide "
+                "landscape context."
+            )
+        ),
+
+        (
+            "04",
+            "Disease evidence",
+            (
+                "Historical KFD occurrence labels "
+                "were compiled from source-backed "
+                "government and surveillance records."
+            )
+        ),
+
+        (
+            "05",
+            "Machine learning",
+            (
+                "Logistic Regression, Decision Tree, "
+                "Random Forest and XGBoost were "
+                "evaluated against verified outbreak "
+                "occurrence."
+            )
+        ),
+
+        (
+            "06",
+            "Spatial validation",
+            (
+                "Leave-One-District-Out validation "
+                "tested whether environmental patterns "
+                "could generalize to completely unseen "
+                "districts."
+            )
+        ),
+
+        (
+            "07",
+            "Feature ablation",
+            (
+                "Dynamic environmental features "
+                "generalized better spatially than "
+                "static elevation and forest-loss "
+                "features."
+            )
+        )
+
+    ]
+
+
     st.html(
-        "Key Limitations"
+        '<div class="paper">'
     )
 
 
+    for number, title, text in methods:
+
+        st.html(
+            f"""
+<div class="method-row">
+
+    <div class="method-number">
+        {number}
+    </div>
+
+    <div class="method-title">
+        {title}
+    </div>
+
+    <div class="method-text">
+        {text}
+    </div>
+
+</div>
+            """
+        )
+
+
+    st.html(
+        "</div>"
+    )
+
+
+    # ========================================================
+    # LIMITATIONS
+    # ========================================================
+
     st.html(
         """
-        - Small verified training dataset.
-        - Unequal historical climate coverage across districts.
-        - Historical surveillance periods are not perfectly
-          harmonized across all sources.
-        - Satellite extraction uses representative district
-          regions rather than complete administrative polygons.
-        - The present forest-loss feature has limited temporal
-          variation.
-        - The classifier score is not a calibrated outbreak
-          probability.
-        - Environmental associations do not establish causality.
+<div class="dark-section">
+
+    <div class="section-index">
+        08 / Scientific boundaries
+    </div>
+
+    <div class="section-title">
+
+        What SpilloverAI
+        cannot claim.
+
+    </div>
+
+    <div class="section-text">
+
+        Scientific limitations are part
+        of the system rather than hidden
+        behind the interface.
+
+    </div>
+
+</div>
+        """
+    )
+
+
+    st.markdown(
+        """
+- The verified KFD machine-learning dataset remains small.
+- Historical climate coverage is uneven across districts.
+- Surveillance periods are not perfectly harmonized across all historical sources.
+- Remote-sensing extraction currently uses representative district regions rather than full administrative polygons.
+- The current forest-loss representation has limited temporal variation.
+- The Random Forest score is not a calibrated disease probability.
+- Feature importance represents model usage, not causal relationships.
+- Cross-district generalization remains modest.
         """
     )
 
 
 # ============================================================
-# 21. FOOTER
+# FOOTER
 # ============================================================
-
-st.divider()
 
 st.html(
     """
-    <div style="
-        text-align:center;
-        color:#74837e;
-        font-size:13px;
-        padding:10px 0 15px 0;
-    ">
+<div class="site-footer">
 
-    SpilloverAI • Zoonotic Spillover Predictor
-    <br>
+    <span>
+        ◐ SpilloverAI
+    </span>
 
-    Research prototype for environmental analysis of
-    Kyasanur Forest Disease in the Western Ghats.
+    <span>
+        KFD /
+        Western Ghats /
+        2015–2024
+    </span>
 
-    </div>
+</div>
     """
 )
