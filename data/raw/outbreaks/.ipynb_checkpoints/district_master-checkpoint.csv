@@ -1,0 +1,10 @@
+State,District,Latitude,Longitude,Forest_Type,Elevation_Category
+Karnataka,Shivamogga,13.9299,75.5681,Tropical Moist Deciduous,Medium
+Karnataka,Uttara Kannada,14.7937,74.6869,Tropical Evergreen,Medium
+Karnataka,Chikkamagaluru,13.3161,75.7720,Tropical Evergreen,High
+Karnataka,Kodagu,12.4244,75.7382,Tropical Evergreen,High
+Kerala,Wayanad,11.6854,76.1320,Tropical Evergreen,High
+Kerala,Kannur,11.8745,75.3704,Tropical Moist Deciduous,Low
+Goa,North Goa,15.4909,73.8278,Moist Deciduous,Low
+Goa,South Goa,15.1170,74.1240,Moist Deciduous,Low
+Maharashtra,Sindhudurg,16.3492,73.5594,Moist Deciduous,Medium

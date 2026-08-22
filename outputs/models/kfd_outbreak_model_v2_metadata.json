@@ -1,0 +1,24 @@
+{
+    "model_version": "v2",
+    "model_name": "Random Forest",
+    "feature_set": "Dynamic environmental features",
+    "features": [
+        "Temperature",
+        "Rainfall",
+        "NDVI",
+        "Temp_Range"
+    ],
+    "target": "Outbreak_Label",
+    "target_definition": "Reported KFD outbreak occurrence",
+    "training_observations": 46,
+    "districts": 9,
+    "primary_validation": "Leave-One-District-Out",
+    "spatial_balanced_accuracy": 0.565,
+    "spatial_precision": 0.571,
+    "spatial_recall": 0.522,
+    "spatial_f1": 0.545,
+    "spatial_roc_auc": 0.544,
+    "spatial_pr_auc": 0.501,
+    "intended_use": "Experimental environmental KFD outbreak-risk classification",
+    "limitations": "Small observational dataset; limited cross-district predictive performance; model score is not a calibrated epidemiological probability."
+}

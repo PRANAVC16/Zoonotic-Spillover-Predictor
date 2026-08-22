@@ -1,0 +1,57 @@
+State,District,Year,Target_Period,Target_Period_Type,KFD_Cases,Deaths,Outbreak_Label,Source_ID,Source_Document,Evidence_Status
+Goa,North Goa,2015,2015-16,NCDC Surveillance Season,191,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,South Goa,2015,2015-16,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Chikkamagaluru,2015,2015-16,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Kodagu,2015,2015-16,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Shivamogga,2015,2015-16,NCDC Surveillance Season,22,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Uttara Kannada,2015,2015-16,NCDC Surveillance Season,1,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Kannur,2015,2015-16,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Wayanad,2015,2015-16,NCDC Surveillance Season,7,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Maharashtra,Sindhudurg,2015,2015-16,NCDC Surveillance Season,25,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,North Goa,2016,2016-17,NCDC Surveillance Season,79,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,South Goa,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Chikkamagaluru,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Kodagu,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Shivamogga,2016,2016-17,NCDC Surveillance Season,62,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Uttara Kannada,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Kannur,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Wayanad,2016,2016-17,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Maharashtra,Sindhudurg,2016,2016-17,NCDC Surveillance Season,87,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,North Goa,2017,2017-18,NCDC Surveillance Season,58,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,South Goa,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Chikkamagaluru,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Kodagu,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Shivamogga,2017,2017-18,NCDC Surveillance Season,15,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Uttara Kannada,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Kannur,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Wayanad,2017,2017-18,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Maharashtra,Sindhudurg,2017,2017-18,NCDC Surveillance Season,35,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,North Goa,2018,2018-19,NCDC Surveillance Season,16,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Goa,South Goa,2018,2018-19,NCDC Surveillance Season,1,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Chikkamagaluru,2018,2018-19,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Kodagu,2018,2018-19,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Shivamogga,2018,2018-19,NCDC Surveillance Season,81,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Uttara Kannada,2018,2018-19,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Kannur,2018,2018-19,NCDC Surveillance Season,0,,0,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Kerala,Wayanad,2018,2018-19,NCDC Surveillance Season,5,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Maharashtra,Sindhudurg,2018,2018-19,NCDC Surveillance Season,34,,1,NCDC_KFD_AFI_2014_2019,Kyasanur Forest Disease: A Public Health Concern,Verified
+Karnataka,Chikkamagaluru,2020,2020,Calendar Year,12,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Kodagu,2020,2020,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Shivamogga,2020,2020,Calendar Year,185,4,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Uttara Kannada,2020,2020,Calendar Year,89,1,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Chikkamagaluru,2021,2021,Calendar Year,3,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Kodagu,2021,2021,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Shivamogga,2021,2021,Calendar Year,15,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Uttara Kannada,2021,2021,Calendar Year,5,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Chikkamagaluru,2022,2022,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Kodagu,2022,2022,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Shivamogga,2022,2022,Calendar Year,35,1,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Uttara Kannada,2022,2022,Calendar Year,14,1,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Chikkamagaluru,2023,2023,Calendar Year,2,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Kodagu,2023,2023,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Shivamogga,2023,2023,Calendar Year,15,0,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Uttara Kannada,2023,2023,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Chikkamagaluru,2024,2024,Calendar Year,126,4,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Kodagu,2024,2024,Calendar Year,0,0,0,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Shivamogga,2024,2024,Calendar Year,63,1,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified
+Karnataka,Uttara Kannada,2024,2024,Calendar Year,113,9,1,KARNATAKA_HFW_2024_25,Karnataka Health and Family Welfare Annual Report 2024-25,Verified

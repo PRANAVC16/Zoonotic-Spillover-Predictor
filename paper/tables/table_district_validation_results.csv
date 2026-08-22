@@ -1,0 +1,46 @@
+Model,District,Observations,Correct,Accuracy,Actual_Outbreaks,Predicted_Outbreaks
+Dummy Baseline,Chikkamagaluru,4,1,0.25,3,0
+Dummy Baseline,Kannur,4,0,0.0,0,4
+Dummy Baseline,Kodagu,9,0,0.0,0,9
+Dummy Baseline,North Goa,4,0,0.0,4,0
+Dummy Baseline,Shivamogga,4,0,0.0,4,0
+Dummy Baseline,Sindhudurg,4,0,0.0,4,0
+Dummy Baseline,South Goa,4,1,0.25,1,4
+Dummy Baseline,Uttara Kannada,9,4,0.4444444444444444,5,0
+Dummy Baseline,Wayanad,4,2,0.5,2,0
+Logistic Regression,Chikkamagaluru,4,3,0.75,3,4
+Logistic Regression,Kannur,4,1,0.25,0,3
+Logistic Regression,Kodagu,9,5,0.5555555555555556,0,4
+Logistic Regression,North Goa,4,1,0.25,4,1
+Logistic Regression,Shivamogga,4,1,0.25,4,1
+Logistic Regression,Sindhudurg,4,4,1.0,4,4
+Logistic Regression,South Goa,4,1,0.25,1,4
+Logistic Regression,Uttara Kannada,9,4,0.4444444444444444,5,2
+Logistic Regression,Wayanad,4,2,0.5,2,0
+Decision Tree,Chikkamagaluru,4,1,0.25,3,0
+Decision Tree,Kannur,4,0,0.0,0,4
+Decision Tree,Kodagu,9,5,0.5555555555555556,0,4
+Decision Tree,North Goa,4,3,0.75,4,3
+Decision Tree,Shivamogga,4,4,1.0,4,4
+Decision Tree,Sindhudurg,4,3,0.75,4,3
+Decision Tree,South Goa,4,1,0.25,1,4
+Decision Tree,Uttara Kannada,9,5,0.5555555555555556,5,9
+Decision Tree,Wayanad,4,3,0.75,2,1
+Random Forest,Chikkamagaluru,4,1,0.25,3,2
+Random Forest,Kannur,4,0,0.0,0,4
+Random Forest,Kodagu,9,4,0.4444444444444444,0,5
+Random Forest,North Goa,4,1,0.25,4,1
+Random Forest,Shivamogga,4,4,1.0,4,4
+Random Forest,Sindhudurg,4,3,0.75,4,3
+Random Forest,South Goa,4,1,0.25,1,4
+Random Forest,Uttara Kannada,9,5,0.5555555555555556,5,5
+Random Forest,Wayanad,4,1,0.25,2,1
+XGBoost,Chikkamagaluru,4,1,0.25,3,2
+XGBoost,Kannur,4,3,0.75,0,1
+XGBoost,Kodagu,9,5,0.5555555555555556,0,4
+XGBoost,North Goa,4,3,0.75,4,3
+XGBoost,Shivamogga,4,0,0.0,4,0
+XGBoost,Sindhudurg,4,3,0.75,4,3
+XGBoost,South Goa,4,1,0.25,1,4
+XGBoost,Uttara Kannada,9,5,0.5555555555555556,5,9
+XGBoost,Wayanad,4,2,0.5,2,0

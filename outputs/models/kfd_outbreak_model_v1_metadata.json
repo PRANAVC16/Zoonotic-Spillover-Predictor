@@ -1,0 +1,28 @@
+{
+    "model_name": "Decision Tree",
+    "target": "Outbreak_Label",
+    "target_definition": "KFD outbreak occurrence",
+    "features": [
+        "Temperature",
+        "Rainfall",
+        "NDVI",
+        "Forest_Loss",
+        "Elevation",
+        "Temp_Range"
+    ],
+    "validation": "Leave-One-District-Out",
+    "training_observations": 46,
+    "districts": [
+        "Chikkamagaluru",
+        "Kannur",
+        "Kodagu",
+        "North Goa",
+        "Shivamogga",
+        "Sindhudurg",
+        "South Goa",
+        "Uttara Kannada",
+        "Wayanad"
+    ],
+    "year_min": 2015,
+    "year_max": 2024
+}

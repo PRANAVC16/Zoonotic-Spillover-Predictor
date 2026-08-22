@@ -1,0 +1,7 @@
+Finding,Result
+Final spatial model,Dynamic Random Forest
+Spatial generalization,Modest cross-district generalization
+Temporal validation,Stronger predictive performance within represented regions
+Feature ablation,Dynamic features outperformed static-only features
+Dataset size,46 verified observations
+Class balance,23 outbreak / 23 non-outbreak
