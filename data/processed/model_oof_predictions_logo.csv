@@ -45,52 +45,52 @@ Kerala,Wayanad,2015,1,0,0.0,9,Dummy Baseline
 Kerala,Wayanad,2016,0,0,0.0,9,Dummy Baseline
 Kerala,Wayanad,2017,0,0,0.0,9,Dummy Baseline
 Kerala,Wayanad,2018,1,0,0.0,9,Dummy Baseline
-Karnataka,Chikkamagaluru,2021,1,1,0.5615919986051405,1,Logistic Regression
-Karnataka,Chikkamagaluru,2022,0,1,0.8346130236152481,1,Logistic Regression
-Karnataka,Chikkamagaluru,2023,1,1,0.7947779372812546,1,Logistic Regression
-Karnataka,Chikkamagaluru,2024,1,1,0.8635308999123633,1,Logistic Regression
-Kerala,Kannur,2015,0,0,0.47961987458426864,2,Logistic Regression
-Kerala,Kannur,2016,0,1,0.7139342031467162,2,Logistic Regression
-Kerala,Kannur,2017,0,1,0.5416454911258222,2,Logistic Regression
-Kerala,Kannur,2018,0,1,0.5816626197248149,2,Logistic Regression
-Karnataka,Kodagu,2015,0,0,0.034724511891169436,3,Logistic Regression
-Karnataka,Kodagu,2016,0,0,0.21106739929616175,3,Logistic Regression
-Karnataka,Kodagu,2017,0,0,0.18123602150144527,3,Logistic Regression
-Karnataka,Kodagu,2018,0,0,0.22422878319633224,3,Logistic Regression
-Karnataka,Kodagu,2020,0,0,0.15607683006793951,3,Logistic Regression
-Karnataka,Kodagu,2021,0,1,0.9981475767360576,3,Logistic Regression
-Karnataka,Kodagu,2022,0,1,0.9983739615277427,3,Logistic Regression
-Karnataka,Kodagu,2023,0,1,0.9978182011364,3,Logistic Regression
-Karnataka,Kodagu,2024,0,1,0.9957157545272897,3,Logistic Regression
-Goa,North Goa,2015,1,0,0.36505439052274746,4,Logistic Regression
-Goa,North Goa,2016,1,0,0.4996111560429712,4,Logistic Regression
-Goa,North Goa,2017,1,1,0.512087177097704,4,Logistic Regression
-Goa,North Goa,2018,1,0,0.4863849672770356,4,Logistic Regression
-Karnataka,Shivamogga,2021,1,0,0.3502346432940765,5,Logistic Regression
-Karnataka,Shivamogga,2022,1,0,0.3451044467962311,5,Logistic Regression
-Karnataka,Shivamogga,2023,1,0,0.4168443846842409,5,Logistic Regression
-Karnataka,Shivamogga,2024,1,1,0.501831704841642,5,Logistic Regression
-Maharashtra,Sindhudurg,2015,1,1,0.6930473281342309,6,Logistic Regression
-Maharashtra,Sindhudurg,2016,1,1,0.678660366660939,6,Logistic Regression
-Maharashtra,Sindhudurg,2017,1,1,0.6929247264918982,6,Logistic Regression
-Maharashtra,Sindhudurg,2018,1,1,0.6668927027306235,6,Logistic Regression
-Goa,South Goa,2015,0,1,0.7708186813806532,7,Logistic Regression
-Goa,South Goa,2016,0,1,0.8403454445784481,7,Logistic Regression
-Goa,South Goa,2017,0,1,0.8597473625087416,7,Logistic Regression
-Goa,South Goa,2018,1,1,0.8513957919197492,7,Logistic Regression
-Karnataka,Uttara Kannada,2015,1,0,0.30463770346100816,8,Logistic Regression
-Karnataka,Uttara Kannada,2016,0,0,0.3617281132613981,8,Logistic Regression
-Karnataka,Uttara Kannada,2017,0,0,0.291792156896344,8,Logistic Regression
-Karnataka,Uttara Kannada,2018,0,0,0.47315670603059173,8,Logistic Regression
-Karnataka,Uttara Kannada,2020,1,0,0.11503922492469923,8,Logistic Regression
-Karnataka,Uttara Kannada,2021,1,0,0.3806461430117817,8,Logistic Regression
-Karnataka,Uttara Kannada,2022,1,1,0.5332276435524509,8,Logistic Regression
-Karnataka,Uttara Kannada,2023,0,1,0.6976402332963489,8,Logistic Regression
-Karnataka,Uttara Kannada,2024,1,0,0.4723774927844865,8,Logistic Regression
-Kerala,Wayanad,2015,1,0,0.1686608265711984,9,Logistic Regression
-Kerala,Wayanad,2016,0,0,0.39801488874896684,9,Logistic Regression
-Kerala,Wayanad,2017,0,0,0.21960570751900452,9,Logistic Regression
-Kerala,Wayanad,2018,1,0,0.23835769856495945,9,Logistic Regression
+Karnataka,Chikkamagaluru,2021,1,1,0.5517171262908724,1,Logistic Regression
+Karnataka,Chikkamagaluru,2022,0,1,0.8308461828597395,1,Logistic Regression
+Karnataka,Chikkamagaluru,2023,1,1,0.7910118246307585,1,Logistic Regression
+Karnataka,Chikkamagaluru,2024,1,1,0.8598331422048051,1,Logistic Regression
+Kerala,Kannur,2015,0,1,0.5994811517894217,2,Logistic Regression
+Kerala,Kannur,2016,0,1,0.7779663803657065,2,Logistic Regression
+Kerala,Kannur,2017,0,1,0.6540316274580198,2,Logistic Regression
+Kerala,Kannur,2018,0,1,0.7069103711846288,2,Logistic Regression
+Karnataka,Kodagu,2015,0,0,0.032401060623346675,3,Logistic Regression
+Karnataka,Kodagu,2016,0,0,0.20899697980357604,3,Logistic Regression
+Karnataka,Kodagu,2017,0,0,0.18190387112776465,3,Logistic Regression
+Karnataka,Kodagu,2018,0,0,0.23039967981919185,3,Logistic Regression
+Karnataka,Kodagu,2020,0,0,0.15863042805686725,3,Logistic Regression
+Karnataka,Kodagu,2021,0,1,0.998308708314983,3,Logistic Regression
+Karnataka,Kodagu,2022,0,1,0.9984546063133054,3,Logistic Regression
+Karnataka,Kodagu,2023,0,1,0.9978616840214024,3,Logistic Regression
+Karnataka,Kodagu,2024,0,1,0.9958920483833642,3,Logistic Regression
+Goa,North Goa,2015,1,0,0.3201418898072866,4,Logistic Regression
+Goa,North Goa,2016,1,0,0.445979733702228,4,Logistic Regression
+Goa,North Goa,2017,1,0,0.46690806556114556,4,Logistic Regression
+Goa,North Goa,2018,1,0,0.4379477665713642,4,Logistic Regression
+Karnataka,Shivamogga,2021,1,0,0.35126519842918175,5,Logistic Regression
+Karnataka,Shivamogga,2022,1,0,0.34440183738892444,5,Logistic Regression
+Karnataka,Shivamogga,2023,1,0,0.4103359272820282,5,Logistic Regression
+Karnataka,Shivamogga,2024,1,0,0.49738554723942924,5,Logistic Regression
+Maharashtra,Sindhudurg,2015,1,1,0.6913598579709562,6,Logistic Regression
+Maharashtra,Sindhudurg,2016,1,1,0.6796171009875542,6,Logistic Regression
+Maharashtra,Sindhudurg,2017,1,1,0.6934433652220735,6,Logistic Regression
+Maharashtra,Sindhudurg,2018,1,1,0.6683077204271332,6,Logistic Regression
+Goa,South Goa,2015,0,1,0.7720595015500996,7,Logistic Regression
+Goa,South Goa,2016,0,1,0.8426055576499794,7,Logistic Regression
+Goa,South Goa,2017,0,1,0.860991103416127,7,Logistic Regression
+Goa,South Goa,2018,1,1,0.8529548043895265,7,Logistic Regression
+Karnataka,Uttara Kannada,2015,1,0,0.2552478266598296,8,Logistic Regression
+Karnataka,Uttara Kannada,2016,0,0,0.3209165038556422,8,Logistic Regression
+Karnataka,Uttara Kannada,2017,0,0,0.257425834065666,8,Logistic Regression
+Karnataka,Uttara Kannada,2018,0,0,0.4356955665813082,8,Logistic Regression
+Karnataka,Uttara Kannada,2020,1,0,0.09720280490038055,8,Logistic Regression
+Karnataka,Uttara Kannada,2021,1,0,0.3379178883130552,8,Logistic Regression
+Karnataka,Uttara Kannada,2022,1,0,0.4797435160654816,8,Logistic Regression
+Karnataka,Uttara Kannada,2023,0,1,0.6487085024601528,8,Logistic Regression
+Karnataka,Uttara Kannada,2024,1,0,0.4224611382505598,8,Logistic Regression
+Kerala,Wayanad,2015,1,0,0.14959550898200327,9,Logistic Regression
+Kerala,Wayanad,2016,0,0,0.3780707665513009,9,Logistic Regression
+Kerala,Wayanad,2017,0,0,0.207078820422855,9,Logistic Regression
+Kerala,Wayanad,2018,1,0,0.23522194565242632,9,Logistic Regression
 Karnataka,Chikkamagaluru,2021,1,0,0.0,1,Decision Tree
 Karnataka,Chikkamagaluru,2022,0,0,0.0,1,Decision Tree
 Karnataka,Chikkamagaluru,2023,1,0,0.0,1,Decision Tree
@@ -102,7 +102,7 @@ Kerala,Kannur,2018,0,1,1.0,2,Decision Tree
 Karnataka,Kodagu,2015,0,0,0.13207547169811323,3,Decision Tree
 Karnataka,Kodagu,2016,0,0,0.13207547169811323,3,Decision Tree
 Karnataka,Kodagu,2017,0,0,0.0,3,Decision Tree
-Karnataka,Kodagu,2018,0,0,0.3783783783783784,3,Decision Tree
+Karnataka,Kodagu,2018,0,0,0.33653846153846156,3,Decision Tree
 Karnataka,Kodagu,2020,0,0,0.0,3,Decision Tree
 Karnataka,Kodagu,2021,0,1,1.0,3,Decision Tree
 Karnataka,Kodagu,2022,0,1,1.0,3,Decision Tree
@@ -112,120 +112,120 @@ Goa,North Goa,2015,1,0,0.0,4,Decision Tree
 Goa,North Goa,2016,1,1,0.6448598130841123,4,Decision Tree
 Goa,North Goa,2017,1,1,0.6448598130841123,4,Decision Tree
 Goa,North Goa,2018,1,1,0.6448598130841123,4,Decision Tree
-Karnataka,Shivamogga,2021,1,1,0.6686046511627909,5,Decision Tree
-Karnataka,Shivamogga,2022,1,1,0.6686046511627909,5,Decision Tree
-Karnataka,Shivamogga,2023,1,1,0.6686046511627909,5,Decision Tree
-Karnataka,Shivamogga,2024,1,1,0.6686046511627909,5,Decision Tree
+Karnataka,Shivamogga,2021,1,1,0.6448598130841123,5,Decision Tree
+Karnataka,Shivamogga,2022,1,1,0.6448598130841123,5,Decision Tree
+Karnataka,Shivamogga,2023,1,1,0.6448598130841123,5,Decision Tree
+Karnataka,Shivamogga,2024,1,1,0.6448598130841123,5,Decision Tree
 Maharashtra,Sindhudurg,2015,1,0,0.0,6,Decision Tree
 Maharashtra,Sindhudurg,2016,1,1,0.6448598130841123,6,Decision Tree
 Maharashtra,Sindhudurg,2017,1,1,0.6448598130841123,6,Decision Tree
 Maharashtra,Sindhudurg,2018,1,1,0.6448598130841123,6,Decision Tree
 Goa,South Goa,2015,0,1,1.0,7,Decision Tree
-Goa,South Goa,2016,0,1,0.6666666666666666,7,Decision Tree
+Goa,South Goa,2016,0,1,1.0,7,Decision Tree
 Goa,South Goa,2017,0,1,1.0,7,Decision Tree
-Goa,South Goa,2018,1,1,0.6666666666666666,7,Decision Tree
+Goa,South Goa,2018,1,1,1.0,7,Decision Tree
 Karnataka,Uttara Kannada,2015,1,1,0.5135135135135135,8,Decision Tree
 Karnataka,Uttara Kannada,2016,0,1,0.5135135135135135,8,Decision Tree
 Karnataka,Uttara Kannada,2017,0,1,0.5135135135135135,8,Decision Tree
 Karnataka,Uttara Kannada,2018,0,1,0.9366197183098592,8,Decision Tree
 Karnataka,Uttara Kannada,2020,1,1,0.5135135135135135,8,Decision Tree
 Karnataka,Uttara Kannada,2021,1,1,0.5135135135135135,8,Decision Tree
-Karnataka,Uttara Kannada,2022,1,1,0.9366197183098592,8,Decision Tree
-Karnataka,Uttara Kannada,2023,0,1,0.9366197183098592,8,Decision Tree
-Karnataka,Uttara Kannada,2024,1,1,0.5135135135135135,8,Decision Tree
+Karnataka,Uttara Kannada,2022,1,1,0.5135135135135135,8,Decision Tree
+Karnataka,Uttara Kannada,2023,0,1,0.5135135135135135,8,Decision Tree
+Karnataka,Uttara Kannada,2024,1,1,0.9366197183098592,8,Decision Tree
 Kerala,Wayanad,2015,1,0,0.0,9,Decision Tree
-Kerala,Wayanad,2016,0,0,0.0,9,Decision Tree
-Kerala,Wayanad,2017,0,0,0.0,9,Decision Tree
-Kerala,Wayanad,2018,1,1,0.6470588235294118,9,Decision Tree
-Karnataka,Chikkamagaluru,2021,1,0,0.42941826962885804,1,Random Forest
-Karnataka,Chikkamagaluru,2022,0,1,0.5021183997691696,1,Random Forest
-Karnataka,Chikkamagaluru,2023,1,1,0.5183682179039321,1,Random Forest
-Karnataka,Chikkamagaluru,2024,1,0,0.3728048752379807,1,Random Forest
-Kerala,Kannur,2015,0,1,0.6809206338166329,2,Random Forest
-Kerala,Kannur,2016,0,1,0.7063336800844442,2,Random Forest
-Kerala,Kannur,2017,0,1,0.6276489776267544,2,Random Forest
-Kerala,Kannur,2018,0,1,0.615956011179717,2,Random Forest
-Karnataka,Kodagu,2015,0,1,0.5353166187762516,3,Random Forest
-Karnataka,Kodagu,2016,0,0,0.4014312454109276,3,Random Forest
-Karnataka,Kodagu,2017,0,0,0.40456638276148393,3,Random Forest
-Karnataka,Kodagu,2018,0,0,0.480105395127607,3,Random Forest
-Karnataka,Kodagu,2020,0,0,0.4187567461728452,3,Random Forest
-Karnataka,Kodagu,2021,0,1,0.8227824164740385,3,Random Forest
-Karnataka,Kodagu,2022,0,1,0.806804854209322,3,Random Forest
-Karnataka,Kodagu,2023,0,1,0.9071439885284466,3,Random Forest
-Karnataka,Kodagu,2024,0,1,0.8276048834842722,3,Random Forest
-Goa,North Goa,2015,1,0,0.21451933079957558,4,Random Forest
-Goa,North Goa,2016,1,0,0.466236913870021,4,Random Forest
-Goa,North Goa,2017,1,0,0.4548038658412501,4,Random Forest
-Goa,North Goa,2018,1,1,0.5647751598232574,4,Random Forest
-Karnataka,Shivamogga,2021,1,1,0.5074028926935774,5,Random Forest
-Karnataka,Shivamogga,2022,1,1,0.5132100625291531,5,Random Forest
-Karnataka,Shivamogga,2023,1,1,0.51496778948688,5,Random Forest
-Karnataka,Shivamogga,2024,1,1,0.51496778948688,5,Random Forest
-Maharashtra,Sindhudurg,2015,1,0,0.3153965877323445,6,Random Forest
-Maharashtra,Sindhudurg,2016,1,1,0.543822409117939,6,Random Forest
-Maharashtra,Sindhudurg,2017,1,1,0.5543486054125822,6,Random Forest
-Maharashtra,Sindhudurg,2018,1,1,0.5700138889910862,6,Random Forest
-Goa,South Goa,2015,0,1,0.6599221192734678,7,Random Forest
-Goa,South Goa,2016,0,1,0.8363381019906274,7,Random Forest
-Goa,South Goa,2017,0,1,0.6748587828946209,7,Random Forest
-Goa,South Goa,2018,1,1,0.8014559863074436,7,Random Forest
-Karnataka,Uttara Kannada,2015,1,0,0.4949935874134953,8,Random Forest
-Karnataka,Uttara Kannada,2016,0,0,0.48823566444683336,8,Random Forest
-Karnataka,Uttara Kannada,2017,0,0,0.4350264795700191,8,Random Forest
-Karnataka,Uttara Kannada,2018,0,1,0.6036963682707888,8,Random Forest
-Karnataka,Uttara Kannada,2020,1,0,0.4584078944021158,8,Random Forest
-Karnataka,Uttara Kannada,2021,1,1,0.5498542157626248,8,Random Forest
-Karnataka,Uttara Kannada,2022,1,1,0.6629949801321063,8,Random Forest
-Karnataka,Uttara Kannada,2023,0,1,0.794328610227683,8,Random Forest
-Karnataka,Uttara Kannada,2024,1,1,0.6299763593509469,8,Random Forest
-Kerala,Wayanad,2015,1,0,0.18695437433750028,9,Random Forest
-Kerala,Wayanad,2016,0,1,0.5019377156500218,9,Random Forest
-Kerala,Wayanad,2017,0,0,0.28095939755421423,9,Random Forest
-Kerala,Wayanad,2018,1,0,0.3229656174264583,9,Random Forest
-Karnataka,Chikkamagaluru,2021,1,1,0.6054756045341492,1,XGBoost
-Karnataka,Chikkamagaluru,2022,0,1,0.6612548828125,1,XGBoost
-Karnataka,Chikkamagaluru,2023,1,0,0.377184122800827,1,XGBoost
-Karnataka,Chikkamagaluru,2024,1,0,0.2304326593875885,1,XGBoost
-Kerala,Kannur,2015,0,0,0.4398249387741089,2,XGBoost
-Kerala,Kannur,2016,0,1,0.5728294253349304,2,XGBoost
-Kerala,Kannur,2017,0,0,0.25578147172927856,2,XGBoost
-Kerala,Kannur,2018,0,0,0.2954121232032776,2,XGBoost
-Karnataka,Kodagu,2015,0,0,0.29452598094940186,3,XGBoost
-Karnataka,Kodagu,2016,0,0,0.2951022684574127,3,XGBoost
-Karnataka,Kodagu,2017,0,0,0.20429445803165436,3,XGBoost
-Karnataka,Kodagu,2018,0,0,0.3894185423851013,3,XGBoost
-Karnataka,Kodagu,2020,0,0,0.20192302763462067,3,XGBoost
-Karnataka,Kodagu,2021,0,1,0.8125573396682739,3,XGBoost
-Karnataka,Kodagu,2022,0,1,0.8069489002227783,3,XGBoost
-Karnataka,Kodagu,2023,0,1,0.8636926412582397,3,XGBoost
-Karnataka,Kodagu,2024,0,1,0.8974195718765259,3,XGBoost
-Goa,North Goa,2015,1,0,0.22174200415611267,4,XGBoost
-Goa,North Goa,2016,1,1,0.5871542096138,4,XGBoost
-Goa,North Goa,2017,1,1,0.5948071479797363,4,XGBoost
-Goa,North Goa,2018,1,1,0.7853387594223022,4,XGBoost
-Karnataka,Shivamogga,2021,1,0,0.4539138674736023,5,XGBoost
-Karnataka,Shivamogga,2022,1,0,0.4539138674736023,5,XGBoost
-Karnataka,Shivamogga,2023,1,0,0.4539138674736023,5,XGBoost
-Karnataka,Shivamogga,2024,1,0,0.4539138674736023,5,XGBoost
-Maharashtra,Sindhudurg,2015,1,0,0.3384888470172882,6,XGBoost
-Maharashtra,Sindhudurg,2016,1,1,0.521281361579895,6,XGBoost
-Maharashtra,Sindhudurg,2017,1,1,0.647948145866394,6,XGBoost
-Maharashtra,Sindhudurg,2018,1,1,0.7278057932853699,6,XGBoost
-Goa,South Goa,2015,0,1,0.6277937889099121,7,XGBoost
-Goa,South Goa,2016,0,1,0.8062517642974854,7,XGBoost
-Goa,South Goa,2017,0,1,0.5129742622375488,7,XGBoost
-Goa,South Goa,2018,1,1,0.7808941602706909,7,XGBoost
-Karnataka,Uttara Kannada,2015,1,1,0.6799533367156982,8,XGBoost
-Karnataka,Uttara Kannada,2016,0,1,0.7088592648506165,8,XGBoost
-Karnataka,Uttara Kannada,2017,0,1,0.6165403723716736,8,XGBoost
-Karnataka,Uttara Kannada,2018,0,1,0.7030693888664246,8,XGBoost
-Karnataka,Uttara Kannada,2020,1,1,0.6799533367156982,8,XGBoost
-Karnataka,Uttara Kannada,2021,1,1,0.6799533367156982,8,XGBoost
-Karnataka,Uttara Kannada,2022,1,1,0.6956824660301208,8,XGBoost
-Karnataka,Uttara Kannada,2023,0,1,0.9093210101127625,8,XGBoost
-Karnataka,Uttara Kannada,2024,1,1,0.721123456954956,8,XGBoost
-Kerala,Wayanad,2015,1,0,0.06314648687839508,9,XGBoost
-Kerala,Wayanad,2016,0,0,0.45293092727661133,9,XGBoost
-Kerala,Wayanad,2017,0,0,0.188320592045784,9,XGBoost
-Kerala,Wayanad,2018,1,0,0.1735180914402008,9,XGBoost
+Kerala,Wayanad,2016,0,0,0.5,9,Decision Tree
+Kerala,Wayanad,2017,0,0,0.5,9,Decision Tree
+Kerala,Wayanad,2018,1,0,0.5,9,Decision Tree
+Karnataka,Chikkamagaluru,2021,1,0,0.4743112292790195,1,Random Forest
+Karnataka,Chikkamagaluru,2022,0,1,0.5092242099709204,1,Random Forest
+Karnataka,Chikkamagaluru,2023,1,1,0.5005148531883166,1,Random Forest
+Karnataka,Chikkamagaluru,2024,1,0,0.4394266716933509,1,Random Forest
+Kerala,Kannur,2015,0,1,0.7457746269901382,2,Random Forest
+Kerala,Kannur,2016,0,1,0.812031700945992,2,Random Forest
+Kerala,Kannur,2017,0,1,0.6979007326742103,2,Random Forest
+Kerala,Kannur,2018,0,1,0.6808649066227248,2,Random Forest
+Karnataka,Kodagu,2015,0,1,0.5262424080959525,3,Random Forest
+Karnataka,Kodagu,2016,0,0,0.4041363132472179,3,Random Forest
+Karnataka,Kodagu,2017,0,0,0.44808027828882313,3,Random Forest
+Karnataka,Kodagu,2018,0,1,0.5179552468093856,3,Random Forest
+Karnataka,Kodagu,2020,0,0,0.47049553490880697,3,Random Forest
+Karnataka,Kodagu,2021,0,1,0.8110674126533375,3,Random Forest
+Karnataka,Kodagu,2022,0,1,0.8073900211271021,3,Random Forest
+Karnataka,Kodagu,2023,0,1,0.860778697466676,3,Random Forest
+Karnataka,Kodagu,2024,0,1,0.8104929863316419,3,Random Forest
+Goa,North Goa,2015,1,0,0.20429267140762403,4,Random Forest
+Goa,North Goa,2016,1,0,0.4333792542049167,4,Random Forest
+Goa,North Goa,2017,1,0,0.45298858077121834,4,Random Forest
+Goa,North Goa,2018,1,1,0.536692203858263,4,Random Forest
+Karnataka,Shivamogga,2021,1,1,0.5871807605544622,5,Random Forest
+Karnataka,Shivamogga,2022,1,1,0.5918670237870862,5,Random Forest
+Karnataka,Shivamogga,2023,1,1,0.5928893574418596,5,Random Forest
+Karnataka,Shivamogga,2024,1,1,0.5928893574418596,5,Random Forest
+Maharashtra,Sindhudurg,2015,1,0,0.28399737096961464,6,Random Forest
+Maharashtra,Sindhudurg,2016,1,1,0.5171637981387054,6,Random Forest
+Maharashtra,Sindhudurg,2017,1,1,0.5478777012314244,6,Random Forest
+Maharashtra,Sindhudurg,2018,1,1,0.5523048495517211,6,Random Forest
+Goa,South Goa,2015,0,1,0.6827277390638015,7,Random Forest
+Goa,South Goa,2016,0,1,0.8488102250029163,7,Random Forest
+Goa,South Goa,2017,0,1,0.7329785802358327,7,Random Forest
+Goa,South Goa,2018,1,1,0.8421591880377334,7,Random Forest
+Karnataka,Uttara Kannada,2015,1,0,0.40018877535466296,8,Random Forest
+Karnataka,Uttara Kannada,2016,0,0,0.46337156026953735,8,Random Forest
+Karnataka,Uttara Kannada,2017,0,0,0.4049918817957775,8,Random Forest
+Karnataka,Uttara Kannada,2018,0,1,0.6297526627007921,8,Random Forest
+Karnataka,Uttara Kannada,2020,1,0,0.42814163776092556,8,Random Forest
+Karnataka,Uttara Kannada,2021,1,1,0.5061428694344049,8,Random Forest
+Karnataka,Uttara Kannada,2022,1,1,0.58441791673134,8,Random Forest
+Karnataka,Uttara Kannada,2023,0,1,0.6611999074484103,8,Random Forest
+Karnataka,Uttara Kannada,2024,1,1,0.6709652740412838,8,Random Forest
+Kerala,Wayanad,2015,1,0,0.17507180985989856,9,Random Forest
+Kerala,Wayanad,2016,0,0,0.3817184565233114,9,Random Forest
+Kerala,Wayanad,2017,0,0,0.24459279326246094,9,Random Forest
+Kerala,Wayanad,2018,1,0,0.29334504058334865,9,Random Forest
+Karnataka,Chikkamagaluru,2021,1,1,0.5742794871330261,1,XGBoost
+Karnataka,Chikkamagaluru,2022,0,1,0.5906755924224854,1,XGBoost
+Karnataka,Chikkamagaluru,2023,1,0,0.36679670214653015,1,XGBoost
+Karnataka,Chikkamagaluru,2024,1,0,0.2774205505847931,1,XGBoost
+Kerala,Kannur,2015,0,1,0.646168053150177,2,XGBoost
+Kerala,Kannur,2016,0,1,0.7344896197319031,2,XGBoost
+Kerala,Kannur,2017,0,1,0.5546125173568726,2,XGBoost
+Kerala,Kannur,2018,0,1,0.5731110572814941,2,XGBoost
+Karnataka,Kodagu,2015,0,0,0.2620397210121155,3,XGBoost
+Karnataka,Kodagu,2016,0,0,0.27237752079963684,3,XGBoost
+Karnataka,Kodagu,2017,0,0,0.18864767253398895,3,XGBoost
+Karnataka,Kodagu,2018,0,0,0.35010918974876404,3,XGBoost
+Karnataka,Kodagu,2020,0,0,0.18864767253398895,3,XGBoost
+Karnataka,Kodagu,2021,0,1,0.7850942611694336,3,XGBoost
+Karnataka,Kodagu,2022,0,1,0.7814956307411194,3,XGBoost
+Karnataka,Kodagu,2023,0,1,0.8267037868499756,3,XGBoost
+Karnataka,Kodagu,2024,0,1,0.8694980144500732,3,XGBoost
+Goa,North Goa,2015,1,0,0.2681075930595398,4,XGBoost
+Goa,North Goa,2016,1,1,0.6748925447463989,4,XGBoost
+Goa,North Goa,2017,1,1,0.6270384192466736,4,XGBoost
+Goa,North Goa,2018,1,1,0.8158512115478516,4,XGBoost
+Karnataka,Shivamogga,2021,1,1,0.6028760075569153,5,XGBoost
+Karnataka,Shivamogga,2022,1,1,0.6028760075569153,5,XGBoost
+Karnataka,Shivamogga,2023,1,1,0.6028760075569153,5,XGBoost
+Karnataka,Shivamogga,2024,1,1,0.6028760075569153,5,XGBoost
+Maharashtra,Sindhudurg,2015,1,0,0.3415200710296631,6,XGBoost
+Maharashtra,Sindhudurg,2016,1,1,0.6618423461914062,6,XGBoost
+Maharashtra,Sindhudurg,2017,1,1,0.7048711776733398,6,XGBoost
+Maharashtra,Sindhudurg,2018,1,1,0.8249948024749756,6,XGBoost
+Goa,South Goa,2015,0,1,0.725281834602356,7,XGBoost
+Goa,South Goa,2016,0,1,0.8491813540458679,7,XGBoost
+Goa,South Goa,2017,0,1,0.6131395697593689,7,XGBoost
+Goa,South Goa,2018,1,1,0.810014545917511,7,XGBoost
+Karnataka,Uttara Kannada,2015,1,0,0.4224696457386017,8,XGBoost
+Karnataka,Uttara Kannada,2016,0,1,0.5080962777137756,8,XGBoost
+Karnataka,Uttara Kannada,2017,0,0,0.3700529634952545,8,XGBoost
+Karnataka,Uttara Kannada,2018,0,1,0.760715663433075,8,XGBoost
+Karnataka,Uttara Kannada,2020,1,0,0.4982670545578003,8,XGBoost
+Karnataka,Uttara Kannada,2021,1,0,0.4982670545578003,8,XGBoost
+Karnataka,Uttara Kannada,2022,1,1,0.515533983707428,8,XGBoost
+Karnataka,Uttara Kannada,2023,0,1,0.7421139478683472,8,XGBoost
+Karnataka,Uttara Kannada,2024,1,1,0.8008584380149841,8,XGBoost
+Kerala,Wayanad,2015,1,0,0.03884099796414375,9,XGBoost
+Kerala,Wayanad,2016,0,0,0.11469303071498871,9,XGBoost
+Kerala,Wayanad,2017,0,0,0.0842929258942604,9,XGBoost
+Kerala,Wayanad,2018,1,0,0.09345561265945435,9,XGBoost

@@ -1,0 +1,45 @@
+{
+    "model_version": "v3",
+    "model_name": "Dynamic Decision Tree",
+    "status": "final_research_model",
+    "supersedes": "kfd_outbreak_model_v2.pkl",
+    "supersession_reason": "V2 was trained before correction of the Sentinel-2 NDVI extraction pipeline.",
+    "target": "Outbreak_Label",
+    "features": [
+        "Temperature",
+        "Rainfall",
+        "NDVI",
+        "Temp_Range"
+    ],
+    "training_observations": 46,
+    "districts": 9,
+    "outbreak_observations": 23,
+    "non_outbreak_observations": 23,
+    "validation": "Leave-One-District-Out",
+    "classifier_parameters": {
+        "max_depth": 3,
+        "min_samples_leaf": 2,
+        "class_weight": "balanced",
+        "random_state": 42
+    },
+    "metrics": {
+        "Accuracy": 0.6521739130434783,
+        "Balanced_Accuracy": 0.6521739130434783,
+        "Precision": 0.6521739130434783,
+        "Recall": 0.6521739130434783,
+        "F1": 0.6521739130434783,
+        "ROC_AUC": 0.5189035916824196,
+        "PR_AUC": 0.5440174428595979
+    },
+    "ndvi_pipeline": "Sentinel-2 Harmonized Level-1C + Cloud Score+; corrected district-year NDVI extraction.",
+    "probability_calibrated": false,
+    "intended_use": "Research prototype for environmental KFD occurrence modelling.",
+    "limitations": [
+        "Small verified dataset",
+        "Limited cross-district generalization",
+        "Model score is not a calibrated outbreak probability",
+        "Representative 50 km regions rather than district polygons",
+        "2015 Sentinel-2 observations represent partial-year coverage",
+        "Environmental associations do not establish causality"
+    ]
+}

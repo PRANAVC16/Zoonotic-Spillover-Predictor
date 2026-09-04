@@ -1,0 +1,11 @@
+Finding,Result
+Final spatial model,Dynamic Decision Tree V3
+Spatial balanced accuracy,0.652
+Spatial ROC-AUC,0.519
+Spatial PR-AUC,0.544
+Temporal Decision Tree balanced accuracy,0.833
+Temporal Decision Tree F1,0.909
+Feature ablation,Dynamic features outperformed static-only features
+Dataset size,46 verified observations
+Class balance,23 outbreak / 23 non-outbreak
+NDVI provenance status,Corrected Sentinel-2 district-year NDVI pipeline
