@@ -20,7 +20,3 @@ The final spatial model is a Dynamic Random Forest trained on 46 verified observ
 ### What the project is - and is not
 
 SpilloverAI is a research prototype for environmental intelligence around KFD. It predicts reported outbreak occurrence from environmental observations; it does not diagnose disease, predict individual infection, establish causality or provide a calibrated epidemiological outbreak probability. Its contribution lies in the reproducible integration of remote sensing, climate data, verified disease evidence, spatial validation and interpretable machine learning.
-
-### Project outcome and next step
-
-The V1 technical pipeline, validated model, dashboard and research assets are complete. The immediate next objective is to document the work in a research paper, publish the repository cleanly on GitHub and present the dashboard as a transparent research demonstrator. Future versions can improve district boundaries, temporal forest-loss features, climate coverage, target volume, model calibration and extension to additional zoonotic diseases.
