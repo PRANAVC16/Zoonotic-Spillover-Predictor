@@ -6,7 +6,7 @@ SpilloverAI is a research-oriented geospatial machine-learning project that inve
 
 The project combines climate observations, satellite-derived vegetation indicators, forest-change information, terrain data, verified historical KFD records, machine-learning models, spatial validation, and an interactive Streamlit dashboard in a single reproducible workflow.
 
-> **Research status:** V1 technical pipeline complete.
+> **Research status:** Technical pipeline complete.
 > **Intended use:** Research and environmental intelligence prototype — not an operational public-health forecasting or diagnostic system.
 
 ---
@@ -27,6 +27,7 @@ The project combines climate observations, satellite-derived vegetation indicato
 * [Getting Started](#getting-started)
 * [Running the Dashboard](#running-the-dashboard)
 * [Research Outputs](#research-outputs)
+* [Version History](#version-history)
 * [Limitations](#limitations)
 * [Future Work](#future-work)
 * [Responsible Interpretation](#responsible-interpretation)
@@ -56,7 +57,7 @@ The project therefore evaluates two distinct forms of generalization:
 
 ## Study Area
 
-The V1 study covers nine KFD-relevant districts across the Western Ghats:
+The study covers nine KFD-relevant districts across the Western Ghats:
 
 | State       | District       |
 | ----------- | -------------- |
@@ -128,7 +129,7 @@ NDVI was calculated using the Sentinel-2 near-infrared and red bands and aggrega
 
 Forest disturbance information was derived from the **Hansen Global Forest Change** dataset.
 
-The current V1 representation is primarily used as a district-level environmental context variable rather than a strong year-specific predictor.
+The current representation is primarily used as a district-level environmental context variable rather than a strong year-specific predictor.
 
 ### Elevation
 
@@ -240,7 +241,7 @@ The ablation experiment showed that the dynamic feature set produced better cros
 
 ## Final Model Results
 
-The final deployment-oriented V1 model is a **Dynamic Random Forest** using:
+The final deployment-oriented model is a **Dynamic Random Forest** using:
 
 * Temperature
 * Rainfall
@@ -288,7 +289,7 @@ Because this evaluation contains a small number of later-year observations and p
 
 ## Key Research Findings
 
-The V1 experiments support four main conclusions:
+The experiments support four main conclusions:
 
 1. **Cross-district prediction is difficult.**
    Environmental conditions alone produced only modest generalization to completely unseen districts.
@@ -489,10 +490,34 @@ Generated outputs include:
 These assets form the quantitative basis of the accompanying research manuscript.
 
 ---
+## Version History
+V3 — Current canonical research version
+
+* Corrected Sentinel-2 district-year NDVI extraction
+* Added Cloud Score+ masking
+* Rebuilt environmental and training datasets
+* Repeated model comparison, temporal validation, and feature ablation
+* Selected Dynamic Decision Tree as the final spatial model
+* Regenerated dashboard inputs and publication assets
+* Updated manuscript results and interpretation
+
+V2 — Superseded research model
+
+* Dynamic Random Forest used as the primary spatial model
+* Superseded after the NDVI provenance audit
+* Retained only for research history and reproducibility
+
+V1 — Initial research pipeline
+
+* Multi-source environmental data integration
+* Prototype environmental risk index
+* Early modelling and dashboard workflow
+
+---
 
 ## Limitations
 
-The current V1 study has several important limitations:
+The current study has several important limitations:
 
 * The verified ML dataset is small.
 * Historical climate coverage is uneven across districts.
